@@ -12,7 +12,7 @@ function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 2000);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .01, 10);
     camera.position.z = 5;
 
     scene = new THREE.Scene();
@@ -21,7 +21,7 @@ function init() {
     scene.add(ambient);
 
     var directionalLight = new THREE.DirectionalLight(0xffffff);
-    directionalLight.position.set(0,0,1);
+    directionalLight.position.set(0,0,5);
     scene.add(directionalLight);
 
     var manager = new THREE.LoadingManager();
