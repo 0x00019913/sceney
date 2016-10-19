@@ -25,6 +25,8 @@ function init() {
         console.log(item, loaded, total);
     }
 
+    var texture = new THREE.Texture();
+
     var onProgress = function (xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
@@ -35,10 +37,18 @@ function init() {
     var onError = function (xhr) {
     };
 
+    var imgloader = new THREE.ImageLoader(manager);
+    imgloader.load('models/7/7_texture.png', function (image) {
+        texture.image = image;
+        texture.needsUpdate = true;
+    });
+    
     var loader = new THREE.OBJLoader(manager);
-    loader.load('models/7_15k_obj.obj', function (obj) {
+    loader.load('models/7/7_29k.obj', function (obj) {
         obj.traverse( function(child) {
-            console.log("traversing...");
+            if (child instanceof THREE.Mesh) {
+                child.material.map = texture;
+            }
         });
         obj.position.y = -95;
         scene.add(obj);
