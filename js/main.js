@@ -44,7 +44,7 @@ function init() {
     });
     
     var loader = new THREE.OBJLoader(manager);
-    loader.load('models/7/7_29k.obj', function (obj) {
+    loader.load('models/7/7_29k.OBJ', function (obj) {
         obj.traverse( function(child) {
             if (child instanceof THREE.Mesh) {
                 child.material.map = texture;
