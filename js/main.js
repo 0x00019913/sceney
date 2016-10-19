@@ -20,6 +20,10 @@ function init() {
     var ambient = new THREE.AmbientLight(0xffffff);
     scene.add(ambient);
 
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(0,0,1);
+    scene.add(directionalLight);
+
     var manager = new THREE.LoadingManager();
     manager.onProgress = function(item, loaded, total) {
         console.log(item, loaded, total);
