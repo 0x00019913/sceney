@@ -9,7 +9,7 @@ init();
 animate();
 
 function init() {
-    container = document.getElementById("container");
+    container = document.getElementById('container');
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .01, 10);
     camera.position.z = 5;
