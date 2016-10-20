@@ -9,9 +9,10 @@ init();
 animate();
 
 function init() {
-    container = document.getElementById("container");
-
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .01, 10);
+    container = document.getElementById('container');
+    
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 100);
+    camera.position.y = 1;
     camera.position.z = 5;
 
     scene = new THREE.Scene();
@@ -27,7 +28,6 @@ function init() {
     manager.onProgress = function(item, loaded, total) {
         console.log(item, loaded, total);
     }
-    
     
     var texture = new THREE.Texture();
 
@@ -54,9 +54,17 @@ function init() {
                 child.material.map = texture;
             }
         });
-        obj.position.y = -95;
+        obj.position.y = 0;
         scene.add(obj);
     }, onProgress, onError);
+
+      
+/*    cubeMat = new THREE.MeshStandardMaterial( {
+        roughness: 0.7,
+        color: 0xffffff,
+        bumpScale: 0.002,
+        metalness: 0.2
+    });*/
     
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
