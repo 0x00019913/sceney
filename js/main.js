@@ -9,7 +9,7 @@ init();
 animate();
 
 function init() {
-    container = document.getElementById('container');
+    container = document.getElementById("container");
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .01, 10);
     camera.position.z = 5;
@@ -57,21 +57,6 @@ function init() {
         obj.position.y = -95;
         scene.add(obj);
     }, onProgress, onError);
-
-
-
-    /*testing*/
-    cubeMat = new THREE.MeshStandardMaterial( {
-        roughness: 0.7,
-        color: 0xffffff,
-        bumpScale: 0.002,
-        metalness: 0.2
-    });
-    var boxGeometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
-    var boxMesh = new THREE.Mesh( boxGeometry, cubeMat );
-    //boxMesh.position.set( -0.5, 0.25, -1 );
-    boxMesh.castShadow = true;
-    scene.add( boxMesh );
     
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
