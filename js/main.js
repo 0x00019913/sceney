@@ -1,10 +1,18 @@
 var container;
 var camera, scene, renderer;
-var mouseX, mouseY;
+var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev;
 
-var radius = 5;
-var radiusDelta = 1;
+var mouseButton = -1;
+
+var r = 5, phi = 0, theta = Math.PI/2;
+var rRate = 1, thetaRate = -3, phiRate = 3;
+// clamp theta to these values so that phi rotation works
+// if theta is at an extreme value
+var thetaLL = .01, thetaUL = Math.PI - .01;
+// theta hat and phi hat (in cartesian coordinates)
+var phiH = new THREE.Vector3(0,0,0), thetaH = new THREE.Vector3(0,0,0);
 var origin = new THREE.Vector3(0,0,0);
+var offset = new THREE.Vector3(0,0,0);
 
 init();
 animate();
@@ -13,7 +21,7 @@ function init() {
   container = document.getElementById('container');
 
   camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 100);
-  camera.position.set(radius,0,0);
+  camera.position.set(r,0,0);
   camera.lookAt(origin);
 
   scene = new THREE.Scene();
@@ -36,39 +44,10 @@ function init() {
   barLight.add(new THREE.Mesh(barGeometry, barMat));
   barLight.position.set(0,5,0);
   barLight.castShadow = true;
-  scene.add(barLight);
+  //scene.add(barLight);
 
   /* GEOMETRY */
-  /*var loader = new THREE.OBJLoader();
-  var textureLoader = new THREE.TextureLoader();
-  var material = new THREE.MeshPhongMaterial({
-    color: 0xcccccc,
-    specular: 0x222222,
-    shininess: 55,
-    normalMap: textureLoader.load('models/test/test_cube_normals.png',function(t) {t.flipY=false;})
-  });
-  loader.load('models/test/test_cube.OBJ' ,function (object) {
-    object.traverse(function(child) {
-      if (child instanceof THREE.Mesh) {
-        child.material = material;
-      }
-      child.position.set(0,-.1,0);
-    });
-    scene.add(object);
-  });*/
-  var loader = new THREE.JSONLoader();
-  var textureLoader = new THREE.TextureLoader();
-
-  var material = new THREE.MeshPhongMaterial ({
-    color: 0xffffff,
-    specular: 0x222222,
-    shininess: 35,
-    normalMap: textureLoader.load('models/7/7_34k_nm_2048.png', function(t) {t.flipY=false;})
-  });
-  loader.load('models/7/7_34k_js.json', function (geometry) {
-    geometry.computeVertexNormals();
-    scene.add(new THREE.Mesh(geometry, material));
-  });
+  loadProject("46", scene);
 
   /* RENDER */
   renderer = new THREE.WebGLRenderer();
@@ -76,11 +55,42 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
-  document.body.addEventListener('mousemove', onDocumentMousemove, false);
+  document.body.addEventListener('mousemove', onMousemove, false);
+  document.body.addEventListener('mousedown', onMouseDown, false);
+  document.body.addEventListener('mouseup', onMouseUp, false);
   document.body.addEventListener('mousewheel', onMousewheel, false);
   document.body.addEventListener('DOMMouseScroll', onMousewheel, false); //Firefox
   window.addEventListener('resize', onWindowResize, false);
 }
+
+function onMousemove (e) {
+  mouseXprev = mouseX;
+  mouseYprev = mouseY;
+  mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+
+  if (mouseButton==0) {
+    theta += thetaRate * (mouseY-mouseYprev);
+    if (theta < thetaLL) theta = thetaLL;
+    if (theta > thetaUL) theta = thetaUL;
+    phi += phiRate * (mouseX-mouseXprev);
+  }
+
+  if (mouseButton==1) {
+    var sintheta = Math.sin(theta);
+    var costheta = Math.cos(theta);
+    var cosphi = Math.cos(phi);
+    var sinphi = Math.sin(phi);
+    thetaH.set(costheta*cosphi, costheta*sinphi, -1*sintheta);
+    phiH.set(-1*sinphi, cosphi, 0);
+    offset.add(thetaH.multiplyScalar(mouseX-mouseXprev)).add(phiH.multiplyScalar(mouseY-mouseYprev));
+    console.log(offset);
+    /* Maybe use camera -> origin vector and project along axes? */
+  }
+}
+
+function onMouseDown(e) { mouseButton = e.button; }
+function onMouseUp(e) { mouseButton = -1; }
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -91,12 +101,7 @@ function onWindowResize() {
 
 function onMousewheel(e) {
   var d = ((typeof e.wheelDelta != "undefined")?(-e.wheelDelta):(e.detail));
-  radius += (d>0)?radiusDelta:(-1*radiusDelta);
-}
-
-function onDocumentMousemove (event) {
-  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-  mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+  r += (d>0)?rRate:(-1*rRate);
 }
 
 function animate() {
@@ -105,11 +110,10 @@ function animate() {
 }
 
 function render() {
-  var phi = mouseX * Math.PI;
-  var theta = (-1 * mouseY + 1) * Math.PI / 2;
-  camera.position.x = radius * Math.cos(phi) * Math.sin(theta);
-  camera.position.z = radius * Math.sin(phi) * Math.sin(theta);
-  camera.position.y = radius * Math.cos(theta);
+  camera.position.x = r * Math.cos(phi) * Math.sin(theta);
+  camera.position.z = r * Math.sin(phi) * Math.sin(theta);
+  camera.position.y = r * Math.cos(theta);
+  camera.position += origin;
   camera.lookAt(origin);
   renderer.render(scene, camera);
 }
