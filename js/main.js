@@ -1,18 +1,16 @@
 var container;
 var camera, scene, renderer;
-var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev;
+var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var r = 5, phi = 0, theta = Math.PI/2;
+var r = 5, phi = Math.PI/2, theta = Math.PI/2;
 var rRate = 1, thetaRate = -3, phiRate = 3;
+var xPanRate = 1, yPanRate = 1;
 // clamp theta to these values so that phi rotation works
 // if theta is at an extreme value
 var thetaLL = .01, thetaUL = Math.PI - .01;
-// theta hat and phi hat (in cartesian coordinates)
-var phiH = new THREE.Vector3(0,0,0), thetaH = new THREE.Vector3(0,0,0);
 var origin = new THREE.Vector3(0,0,0);
-var offset = new THREE.Vector3(0,0,0);
 
 init();
 animate();
@@ -68,24 +66,26 @@ function onMousemove (e) {
   mouseYprev = mouseY;
   mouseX = (e.clientX / window.innerWidth) * 2 - 1;
   mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+  dX = mouseX-mouseXprev;
+  dY = mouseY-mouseYprev;
 
   if (mouseButton==0) {
-    theta += thetaRate * (mouseY-mouseYprev);
+    theta += thetaRate * dY;
     if (theta < thetaLL) theta = thetaLL;
     if (theta > thetaUL) theta = thetaUL;
-    phi += phiRate * (mouseX-mouseXprev);
+    phi += phiRate * dX;
   }
 
   if (mouseButton==1) {
-    var sintheta = Math.sin(theta);
-    var costheta = Math.cos(theta);
-    var cosphi = Math.cos(phi);
-    var sinphi = Math.sin(phi);
-    thetaH.set(costheta*cosphi, costheta*sinphi, -1*sintheta);
-    phiH.set(-1*sinphi, cosphi, 0);
-    offset.add(thetaH.multiplyScalar(mouseX-mouseXprev)).add(phiH.multiplyScalar(mouseY-mouseYprev));
-    console.log(offset);
-    /* Maybe use camera -> origin vector and project along axes? */
+    // default plane (theta=phi=0) is Y up, Z right, so put displacement
+    // vector in that plane, rotate around Z to adjust for theta,
+    // then rotate around Y to adjust for phi
+    var displacement = new THREE.Vector3(0, dY*yPanRate, dX*xPanRate);
+    displacement.applyAxisAngle(new THREE.Vector3(0,0,-1),Math.PI/2-theta);
+    displacement.applyAxisAngle(new THREE.Vector3(0,1,0),phi);
+    console.log(displacement.clone().normalize());
+    displacement.x *= -1;
+    origin.add(displacement);
   }
 }
 
@@ -110,10 +110,9 @@ function animate() {
 }
 
 function render() {
-  camera.position.x = r * Math.cos(phi) * Math.sin(theta);
-  camera.position.z = r * Math.sin(phi) * Math.sin(theta);
-  camera.position.y = r * Math.cos(theta);
-  camera.position += origin;
+  camera.position.x = r * Math.cos(phi) * Math.sin(theta) + origin.x;
+  camera.position.z = r * Math.sin(phi) * Math.sin(theta) + origin.z;
+  camera.position.y = r * Math.cos(theta) + origin.y;
   camera.lookAt(origin);
   renderer.render(scene, camera);
 }
