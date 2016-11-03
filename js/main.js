@@ -4,13 +4,14 @@ var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var r = 5, phi = Math.PI/2, theta = Math.PI/2;
+var r = 3, phi = Math.PI/2, theta = Math.PI/2;
 var rRate = 1, thetaRate = -3, phiRate = 3;
 var xPanRate = 1, yPanRate = 1;
 // clamp theta to these values so that phi rotation works
-// if theta is at an extreme value
-var thetaLL = .01, thetaUL = Math.PI - .01;
-var origin = new THREE.Vector3(0,0,0);
+// if theta is at an extreme value; clamp r to prevent
+// zooming in past 0
+var thetaLL = .01, thetaUL = Math.PI - .01, rLL = .01;
+var origin = new THREE.Vector3(0,-0.10,0);
 
 init();
 animate();
@@ -23,9 +24,10 @@ function init() {
   camera.lookAt(origin);
 
   scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xffffff);
 
   /* LIGHTS */
-  var dirLight = new THREE.DirectionalLight(0xffffff, .3);
+  var dirLight = new THREE.DirectionalLight(0xffffff, .5);
   dirLight.position.set(0,0,10);
   scene.add(dirLight);
   var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .4);
@@ -48,7 +50,7 @@ function init() {
   loadProject("46", scene);
 
   /* RENDER */
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
@@ -69,22 +71,22 @@ function onMousemove (e) {
   dX = mouseX-mouseXprev;
   dY = mouseY-mouseYprev;
 
-  if (mouseButton==0) {
+  if (mouseButton==0) { // rotating camera
     theta += thetaRate * dY;
     if (theta < thetaLL) theta = thetaLL;
     if (theta > thetaUL) theta = thetaUL;
     phi += phiRate * dX;
   }
 
-  if (mouseButton==1) {
+  if (mouseButton==1) { // panning
+    // Not obvious:
     // default plane (theta=phi=0) is Y up, Z right, so put displacement
     // vector in that plane, rotate around Z to adjust for theta,
     // then rotate around Y to adjust for phi
     var displacement = new THREE.Vector3(0, dY*yPanRate, dX*xPanRate);
     displacement.applyAxisAngle(new THREE.Vector3(0,0,-1),Math.PI/2-theta);
     displacement.applyAxisAngle(new THREE.Vector3(0,1,0),phi);
-    console.log(displacement.clone().normalize());
-    displacement.x *= -1;
+    displacement.x *= -1; // minus is necessary for some reason
     origin.add(displacement);
   }
 }
@@ -102,6 +104,8 @@ function onWindowResize() {
 function onMousewheel(e) {
   var d = ((typeof e.wheelDelta != "undefined")?(-e.wheelDelta):(e.detail));
   r += (d>0)?rRate:(-1*rRate);
+  if (r<rLL) r = rLL;
+  console.log(r);
 }
 
 function animate() {

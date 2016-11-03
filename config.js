@@ -33,9 +33,28 @@ model = {
 }
 project.models.push(model);
 model = {
+  name: "column_bot_ornament_low_new_js.json",
+  normalmap: "column_bot_ornament_normals_512.bmp"
+}
+project.models.push(model);
+model = {
+  name: "hearth_top_base_js.json"
+}
+project.models.push(model);
+model = {
   name: "mural_low_js.json",
   normalmap: "mural_normal_512.bmp",
   flipped: true
+}
+project.models.push(model);
+model = {
+  name: "mural_border_base_js.json",
+  shading: THREE.FlatShading
+}
+project.models.push(model);
+model = {
+  name: "column_top_js.json",
+  shading: THREE.FlatShading
 }
 project.models.push(model);
 config.projects['46'] = project;
