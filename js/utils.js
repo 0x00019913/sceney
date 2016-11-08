@@ -14,6 +14,8 @@ function loadProject(name, scene) {
     model = project.models[i];
     loadModel(model, project, loader, textureLoader, dir);
   }
+
+  doSetup(project.setup);
 }
 
 function loadModel(model, project, loader, textureLoader, dir) {
@@ -22,6 +24,9 @@ function loadModel(model, project, loader, textureLoader, dir) {
     specular: 0x222222,
     shininess: 35
   });
+  if (model.color) {
+    material.color = new THREE.Color(model.color);
+  }
   if (model.normalmap) {
     material.normalMap = textureLoader.load(dir+model.normalmap,
       function(t) {t.flipY=!model.flipped;});
@@ -51,4 +56,8 @@ function loadModel(model, project, loader, textureLoader, dir) {
     var percent = 100 * ret.loaded / ret.total;
     console.log(Math.round(percent, 2) + "% downloaded: " + model.name);
   });
+}
+
+function doSetup(setup) {
+  if (setup.r) r = setup.r;
 }

@@ -6,7 +6,7 @@ var mouseButton = -1;
 
 var r = 3, phi = Math.PI/2, theta = Math.PI/2;
 var rRate = 1, thetaRate = -3, phiRate = 3;
-var xPanRate = 1, yPanRate = 1;
+var xPanRate = 2.5, yPanRate = 2.5;
 // clamp theta to these values so that phi rotation works
 // if theta is at an extreme value; clamp r to prevent
 // zooming in past 0
@@ -24,7 +24,7 @@ function init() {
   camera.lookAt(origin);
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
+  scene.background = new THREE.Color(0x0);
 
   /* LIGHTS */
   var dirLight = new THREE.DirectionalLight(0xffffff, .5);
@@ -47,7 +47,18 @@ function init() {
   //scene.add(barLight);
 
   /* GEOMETRY */
-  loadProject("46", scene);
+  var groundGeometry = new THREE.PlaneGeometry(15,15);
+  var groundMaterial = new THREE.MeshStandardMaterial({
+    roughness: 0.8,
+    color: 0xffffff,
+    metalness: 0.2,
+    bumpScale: 0.0005
+  });
+  var ground = new THREE.Mesh (groundGeometry, groundMaterial);
+  ground.rotation.x = -Math.PI/2;
+  ground.position.y = -1.2;
+  //scene.add(ground);
+  loadProject("13", scene);
 
   /* RENDER */
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -58,6 +69,7 @@ function init() {
   document.body.addEventListener('mousemove', onMousemove, false);
   document.body.addEventListener('mousedown', onMouseDown, false);
   document.body.addEventListener('mouseup', onMouseUp, false);
+  document.body.addEventListener('mouseenter', onMouseEnter, false);
   document.body.addEventListener('mousewheel', onMousewheel, false);
   document.body.addEventListener('DOMMouseScroll', onMousewheel, false); //Firefox
   window.addEventListener('resize', onWindowResize, false);
@@ -93,6 +105,7 @@ function onMousemove (e) {
 
 function onMouseDown(e) { mouseButton = e.button; }
 function onMouseUp(e) { mouseButton = -1; }
+function onMouseEnter(e) { mouseButton = -1; }
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -105,7 +118,6 @@ function onMousewheel(e) {
   var d = ((typeof e.wheelDelta != "undefined")?(-e.wheelDelta):(e.detail));
   r += (d>0)?rRate:(-1*rRate);
   if (r<rLL) r = rLL;
-  console.log(r);
 }
 
 function animate() {
