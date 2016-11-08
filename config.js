@@ -28,13 +28,26 @@ project = {
 model = {
   name: "13_low_js.json",
   normalmap: "13_nm.BMP",
-  flipped: true
+  flipped: true,
+  color: 0xffcccc,
+  specular: 0x550000,
+  shininess: 100
 };
 project.models.push(model);
 model = {
   name: "eye_js.json",
-  color: 0xff0000
+  color: 0xff0000,
+  specular: 0xdd0000,
+  shininess: 100
 };
+project.models.push(model);
+model = {
+  name: "pedestal_js.json",
+  normalmap: "pedestal_nm.BMP",
+  flipped: true,
+  color: 0x222222,
+  shininess: 15
+}
 project.models.push(model);
 config.projects['13'] = project;
 

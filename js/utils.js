@@ -24,9 +24,9 @@ function loadModel(model, project, loader, textureLoader, dir) {
     specular: 0x222222,
     shininess: 35
   });
-  if (model.color) {
-    material.color = new THREE.Color(model.color);
-  }
+  if (model.color) material.color = new THREE.Color(model.color);
+  if (model.specular) material.specular = new THREE.Color(model.specular);
+  if (model.shininess) material.shininess = model.shininess;
   if (model.normalmap) {
     material.normalMap = textureLoader.load(dir+model.normalmap,
       function(t) {t.flipY=!model.flipped;});
@@ -39,7 +39,6 @@ function loadModel(model, project, loader, textureLoader, dir) {
   function (geometry) {
     geometry.computeVertexNormals();
     var mesh = new THREE.Mesh(geometry,material);
-    console.log(project);
     if (project.rotation) {
       mesh.rotation.x += project.rotation[0];
       mesh.rotation.y += project.rotation[1];
@@ -50,6 +49,8 @@ function loadModel(model, project, loader, textureLoader, dir) {
       mesh.position.y += project.offset[1];
       mesh.position.z += project.offset[2];
     }
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     scene.add(mesh);
   },
   function (ret) {
