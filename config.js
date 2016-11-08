@@ -10,7 +10,7 @@ project = {
 };
 model = {
   name: "7_34k_js.json",
-  normalmap: "7_34k_nm_2048.png",
+  normalMap: "7_34k_nm_2048.png",
   flipped: true /* results in flipY = false */
 };
 project.models.push(model);
@@ -27,9 +27,10 @@ project = {
 };
 model = {
   name: "13_low_js.json",
-  normalmap: "13_nm.BMP",
+  normalMap: "13_nm.BMP",
+  normalScale: new THREE.Vector2(2,2),
   flipped: true,
-  color: 0xffcccc,
+  color: 0x333333,
   specular: 0x550000,
   shininess: 100
 };
@@ -43,10 +44,11 @@ model = {
 project.models.push(model);
 model = {
   name: "pedestal_js.json",
-  normalmap: "pedestal_nm.BMP",
+  normalMap: "pedestal_nm.BMP",
+  normalScale: new THREE.Vector2(4,4),
   flipped: true,
   color: 0x222222,
-  shininess: 15
+  shininess: 60
 }
 project.models.push(model);
 config.projects['13'] = project;
@@ -59,7 +61,7 @@ project = {
 };
 model = {
   name: "hearth_bot_low_js.json",
-  normalmap: "hearth_bot_1024_normals.bmp"
+  normalMap: "hearth_bot_1024_normals.bmp"
 };
 project.models.push(model);
 model = {
@@ -69,7 +71,7 @@ model = {
 project.models.push(model);
 model = {
   name: "column_bot_ornament_low_new_js.json",
-  normalmap: "column_bot_ornament_normals_512.bmp"
+  normalMap: "column_bot_ornament_normals_512.bmp"
 }
 project.models.push(model);
 model = {
@@ -78,7 +80,7 @@ model = {
 project.models.push(model);
 model = {
   name: "mural_low_js.json",
-  normalmap: "mural_normal_512.bmp",
+  normalMap: "mural_normal_512.bmp",
   flipped: true
 }
 project.models.push(model);
@@ -99,7 +101,7 @@ model = {
 project.models.push(model);
 model = {
   name: "skulls_js.json",
-  normalmap: "skull_normals.bmp"
+  normalMap: "skull_normals.bmp"
 }
 project.models.push(model);
 config.projects['46'] = project;

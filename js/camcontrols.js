@@ -46,11 +46,11 @@ function initCam(type) {
       z: -2, // may not use
       or: 1,
       otheta: Math.PI/2,
-      ophi: Math.PI,
+      ophi: Math.PI, // likely won't use
       rRate: 1,
-      phiRate: 1,
+      phiRate: 2,
       zRate: 1,
-      othetaRate: -0.5,
+      othetaRate: -0.25,
       ophiRate: -0.5,
       xPanRate: 2.5,
       yPanRate: 2.5,
@@ -90,10 +90,10 @@ function handleLMB(cam, dX, dY) {
     cam.phi += cam.phiRate * dX;
   }
   if (cam.type==CylCam) {
-    cam.otheta += cam.othetaRate * dY;
+    cam.otheta -= cam.othetaRate * dY;
     if (cam.otheta < cam.othetaLL) cam.otheta = cam.othetaLL;
     if (cam.otheta > cam.othetaUL) cam.otheta = cam.othetaUL;
-    cam.ophi += cam.ophiRate * dX;
+    cam.phi += cam.phiRate * dX;
     console.log(cam.origin, camera.position);
   }
 }
@@ -111,12 +111,15 @@ function handleMMB(cam, dX, dY) {
     cam.origin.add(displacement);
   }
   if (cam.type==CylCam) {
-    cam.phi += cam.phiRate * dX;
   }
 }
 
 function handleWheel(cam, d) {
   if (cam.type==FreeCam) {
+    cam.r += (d>0)?cam.rRate:(-1*cam.rRate);
+    if (cam.r<cam.rLL) cam.r = cam.rLL;
+  }
+  if (cam.type==CylCam) {
     cam.r += (d>0)?cam.rRate:(-1*cam.rRate);
     if (cam.r<cam.rLL) cam.r = cam.rLL;
   }

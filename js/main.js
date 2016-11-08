@@ -20,14 +20,14 @@ function init() {
 
   /* LIGHTS */
   var dirLight = new THREE.DirectionalLight(0xffffff, .2);
-  dirLight.position.set(0,0,10);
+  dirLight.position.set(0,0,15);
   scene.add(dirLight);
   var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .1);
   hemiLight.position.set(0,20,0);
   scene.add(hemiLight);
 
   var cubeGeometry = new THREE.BoxGeometry(.1,.1,.1);
-  var cubeLight = new THREE.PointLight(0xffffff, 2, 100, 1);
+  var cubeLight = new THREE.PointLight(0xffffff, 3, 100, 2);
   var cubeMat = new THREE.MeshStandardMaterial({
     emissive: 0xffffff,
     emissiveIntensity: 2,

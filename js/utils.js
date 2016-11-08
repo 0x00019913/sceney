@@ -27,10 +27,12 @@ function loadModel(model, project, loader, textureLoader, dir) {
   if (model.color) material.color = new THREE.Color(model.color);
   if (model.specular) material.specular = new THREE.Color(model.specular);
   if (model.shininess) material.shininess = model.shininess;
-  if (model.normalmap) {
-    material.normalMap = textureLoader.load(dir+model.normalmap,
+  if (model.normalMap) {
+    material.normalMap = textureLoader.load(dir+model.normalMap,
       function(t) {t.flipY=!model.flipped;});
-    material.normalScale = new THREE.Vector2(2,2);
+  }
+  if (model.normalScale) {
+    material.normalScale = model.normalScale;
   }
   if (model.shading) {
     material.shading = model.shading;
