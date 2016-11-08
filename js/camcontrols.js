@@ -12,15 +12,15 @@ var FreeCam = 0;
 //  radius of rail r
 //  angle around rail phi
 //  z (vertical displacement of rail, may not use)
-//  pivot params pr, ptheta, pphi (camera pivoting about set place on rail)
+//  origin pivot params or, otheta, ophi (around camera's location on rail)
 // Camera's position on rail is set w/ MMB. Camera's rotation around pivot
 // is set w/ LMB; this moves the origin and tells camera to look at it. Zooming
 // adds a displacement vector to camera and origin, which rotates w/ phi.
 var CylCam = 1;
 
 epsilon = .01;
-
 function initCam(type) {
+
   if (type==FreeCam) {
     return {
       type: FreeCam,
@@ -41,17 +41,21 @@ function initCam(type) {
   if (type==CylCam) {
     return {
       type: CylCam,
-      r: 20,
+      r: 15,
       phi: Math.PI/2,
-      z: 0, // may not use
-      pr: epsilon,
-      ptheta: Math.PI/2,
-      pphi: Math.PI/2,
+      z: -2, // may not use
+      or: 1,
+      otheta: Math.PI/2,
+      ophi: Math.PI,
       rRate: 1,
       phiRate: 1,
       zRate: 1,
+      othetaRate: -0.5,
+      ophiRate: -0.5,
       xPanRate: 2.5,
       yPanRate: 2.5,
+      othetaLL: epsilon,
+      othetaUL: Math.PI-epsilon,
       rLL: epsilon,
       origin: new THREE.Vector3(0,0,0)
     };
@@ -69,6 +73,11 @@ function positionCamera(cam, camera) {
     camera.position.x = cam.r * Math.cos(cam.phi);
     camera.position.z = cam.r * Math.sin(cam.phi);
     camera.position.y = cam.z;
+    cam.origin.x = cam.or * Math.cos(cam.ophi) * Math.sin(cam.otheta);
+    cam.origin.z = cam.or * Math.sin(cam.ophi) * Math.sin(cam.otheta);
+    cam.origin.y = cam.or * Math.cos(cam.otheta);
+    cam.origin.applyAxisAngle(new THREE.Vector3(0,1,0),-cam.phi);
+    cam.origin.add(camera.position);
     camera.lookAt(cam.origin);
   }
 }
@@ -79,6 +88,13 @@ function handleLMB(cam, dX, dY) {
     if (cam.theta < cam.thetaLL) cam.theta = cam.thetaLL;
     if (cam.theta > cam.thetaUL) cam.theta = cam.thetaUL;
     cam.phi += cam.phiRate * dX;
+  }
+  if (cam.type==CylCam) {
+    cam.otheta += cam.othetaRate * dY;
+    if (cam.otheta < cam.othetaLL) cam.otheta = cam.othetaLL;
+    if (cam.otheta > cam.othetaUL) cam.otheta = cam.othetaUL;
+    cam.ophi += cam.ophiRate * dX;
+    console.log(cam.origin, camera.position);
   }
 }
 

@@ -30,6 +30,7 @@ function loadModel(model, project, loader, textureLoader, dir) {
   if (model.normalmap) {
     material.normalMap = textureLoader.load(dir+model.normalmap,
       function(t) {t.flipY=!model.flipped;});
+    material.normalScale = new THREE.Vector2(2,2);
   }
   if (model.shading) {
     material.shading = model.shading;

@@ -26,17 +26,17 @@ function init() {
   hemiLight.position.set(0,20,0);
   scene.add(hemiLight);
 
-  var barGeometry = new THREE.BoxGeometry(.1,.1,.1);
-  var barLight = new THREE.PointLight(0xffffff, .5, 100, 1);
-  var barMat = new THREE.MeshStandardMaterial({
+  var cubeGeometry = new THREE.BoxGeometry(.1,.1,.1);
+  var cubeLight = new THREE.PointLight(0xffffff, 2, 100, 1);
+  var cubeMat = new THREE.MeshStandardMaterial({
     emissive: 0xffffff,
     emissiveIntensity: 2,
     color: 0x666666
   });
-  barLight.add(new THREE.Mesh(barGeometry, barMat));
-  barLight.position.set(0,15,-5);
-  barLight.castShadow = true;
-  scene.add(barLight);
+  cubeLight.add(new THREE.Mesh(cubeGeometry, cubeMat));
+  cubeLight.position.set(0,25,-5);
+  cubeLight.castShadow = true;
+  scene.add(cubeLight);
 
   /* GEOMETRY */
   var groundGeometry = new THREE.PlaneGeometry(50,50);
