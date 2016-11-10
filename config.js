@@ -16,13 +16,33 @@ model = {
 project.models.push(model);
 config.projects['7'] = project;
 
+// PROJECT ANTELOPE
+project = {
+  name: "ANTELOPE",
+  models: [],
+  rotation: [-Math.PI/2, 0, 0]
+};
+model = {
+  name: "antelope_38k_js.json",
+  normalMap: "antelope_nm.bmp",
+  color: 0x999999,
+  specular: 0xff0000,
+  shininess: 30
+};
+project.models.push(model);
+config.projects['ANTELOPE'] = project;
+
 // PROJECT 13
 project = {
   name: "13",
   models: [],
-  offset: [0,9,0],
+  offset: [0,8,0],
   setup: {
-    r: 17
+    camera: {
+      type: CylCam,
+      r: 30,
+      othetaUL: Math.PI/2
+    }
   }
 };
 model = {
@@ -30,25 +50,26 @@ model = {
   normalMap: "13_nm.BMP",
   normalScale: new THREE.Vector2(2,2),
   flipped: true,
-  color: 0x333333,
-  specular: 0x550000,
-  shininess: 100
+  color: 0x111111,
+  specular: 0x222121,
+  shininess: 50
 };
 project.models.push(model);
 model = {
   name: "eye_js.json",
-  color: 0xff0000,
+  color: 0x330011,
   specular: 0xdd0000,
   shininess: 100
 };
 project.models.push(model);
 model = {
-  name: "pedestal_js.json",
-  normalMap: "pedestal_nm.BMP",
+  name: "rock_js.json",
+  normalMap: "rock_nm.BMP",
   normalScale: new THREE.Vector2(4,4),
   flipped: true,
   color: 0x222222,
-  shininess: 60
+  specular: 0x0,
+  shininess: 30
 }
 project.models.push(model);
 config.projects['13'] = project;
@@ -104,4 +125,5 @@ model = {
   normalMap: "skull_normals.bmp"
 }
 project.models.push(model);
+
 config.projects['46'] = project;

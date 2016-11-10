@@ -4,7 +4,7 @@ var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var cam = initCam(CylCam); // init settings for camera behavior
+var projectName = "13";
 
 init();
 animate();
@@ -12,8 +12,7 @@ animate();
 function init() {
   container = document.getElementById('container');
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 100);
-  positionCamera(cam, camera);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 1024);
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0);
@@ -21,38 +20,42 @@ function init() {
   /* LIGHTS */
   var dirLight = new THREE.DirectionalLight(0xffffff, .2);
   dirLight.position.set(0,0,15);
-  scene.add(dirLight);
+  //scene.add(dirLight);
   var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .1);
   hemiLight.position.set(0,20,0);
   scene.add(hemiLight);
 
   var cubeGeometry = new THREE.BoxGeometry(.1,.1,.1);
-  var cubeLight = new THREE.PointLight(0xffffff, 3, 100, 2);
-  var cubeMat = new THREE.MeshStandardMaterial({
+  var cubeLight = new THREE.PointLight(0xffffff, 10, 100, 2);
+  var cubeLight2 = new THREE.PointLight(0xffffff, 2, 100, 2);
+  /*var cubeMat = new THREE.MeshStandardMaterial({
     emissive: 0xffffff,
     emissiveIntensity: 2,
     color: 0x666666
   });
   cubeLight.add(new THREE.Mesh(cubeGeometry, cubeMat));
+  cubeLight2.add(new THREE.Mesh(cubeGeometry, cubeMat));*/
   cubeLight.position.set(0,25,-5);
+  cubeLight2.position.set(0,5,10);
   cubeLight.castShadow = true;
+  cubeLight2.castShadow = true;
   scene.add(cubeLight);
+  scene.add(cubeLight2);
 
   /* GEOMETRY */
-  var groundGeometry = new THREE.PlaneGeometry(50,50);
-  var groundMaterial = new THREE.MeshStandardMaterial({
-    roughness: 0.8,
-    color: 0x999999,
-    metalness: 1,
-    bumpScale: 0.0005
+  var envGeometry = new THREE.BoxGeometry(200,200,200);
+  var envMaterial = new THREE.MeshPhongMaterial({
+    color: 0x111111,
+    specular: 0x0,
+    shininess: 0,
+    side: THREE.BackSide
   });
-  var ground = new THREE.Mesh (groundGeometry, groundMaterial);
-  //ground.receiveShadow = true;
-  ground.rotation.x = -Math.PI/2;
-  ground.position.y = -4.4;
-  //scene.add(ground);
+  var env = new THREE.Mesh(envGeometry, envMaterial);
+  env.position.y = 80;
+  scene.add(env);
 
-  loadProject("13", scene);
+  loadProject(projectName, scene);
+  positionCamera(camera);
 
   /* RENDER */
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -79,17 +82,17 @@ function onMousemove (e) {
   dY = mouseY-mouseYprev;
 
   if (mouseButton==0) { // LMB
-    handleLMB(cam, dX, dY);
+    handleLMB(dX, dY);
   }
 
   if (mouseButton==1) { // MMB
-    handleMMB(cam, dX, dY);
+    handleMMB(dX, dY);
   }
 }
 
 function onMousewheel(e) {
   var d = ((typeof e.wheelDelta != "undefined")?(-e.wheelDelta):(e.detail));
-  handleWheel(cam, d);
+  handleWheel(d);
 }
 
 function onMouseDown(e) { mouseButton = e.button; }
@@ -109,6 +112,6 @@ function animate() {
 }
 
 function render() {
-  positionCamera(cam, camera);
+  positionCamera(camera);
   renderer.render(scene, camera);
 }

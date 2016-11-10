@@ -63,5 +63,7 @@ function loadModel(model, project, loader, textureLoader, dir) {
 }
 
 function doSetup(setup) {
-  if (setup.r) r = setup.r;
+  if (setup.camera) {
+    initCam(setup.camera);
+  }
 }

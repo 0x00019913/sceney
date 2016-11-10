@@ -18,16 +18,17 @@ var FreeCam = 0;
 // adds a displacement vector to camera and origin, which rotates w/ phi.
 var CylCam = 1;
 
+var cam;
 epsilon = .01;
-function initCam(type) {
 
-  if (type==FreeCam) {
-    return {
+function initCam(params) {
+  if (params.type==FreeCam) {
+    cam = {
       type: FreeCam,
       r: 20,
       phi: Math.PI/2,
       theta: Math.PI/2,
-      rRate: 1,
+      rRate: .1,
       thetaRate: -3,
       phiRate: 3,
       xPanRate: 2.5,
@@ -38,8 +39,8 @@ function initCam(type) {
       origin: new THREE.Vector3(0,0,0)
     };
   }
-  if (type==CylCam) {
-    return {
+  if (params.type==CylCam) {
+    cam = {
       type: CylCam,
       r: 15,
       phi: Math.PI/2,
@@ -47,10 +48,10 @@ function initCam(type) {
       or: 1,
       otheta: Math.PI/2,
       ophi: Math.PI, // likely won't use
-      rRate: 1,
+      rRate: .1,
       phiRate: 2,
       zRate: 1,
-      othetaRate: -0.25,
+      othetaRate: -0.6,
       ophiRate: -0.5,
       xPanRate: 2.5,
       yPanRate: 2.5,
@@ -60,9 +61,13 @@ function initCam(type) {
       origin: new THREE.Vector3(0,0,0)
     };
   }
+
+  for (var key in params) {
+    cam[key] = params[key];
+  }
 }
 
-function positionCamera(cam, camera) {
+function positionCamera(camera) {
   if (cam.type==FreeCam) {
     camera.position.x = cam.r * Math.cos(cam.phi) * Math.sin(cam.theta) + cam.origin.x;
     camera.position.z = cam.r * Math.sin(cam.phi) * Math.sin(cam.theta) + cam.origin.z;
@@ -82,7 +87,7 @@ function positionCamera(cam, camera) {
   }
 }
 
-function handleLMB(cam, dX, dY) {
+function handleLMB(dX, dY) {
   if (cam.type==FreeCam) {
     cam.theta += cam.thetaRate * dY;
     if (cam.theta < cam.thetaLL) cam.theta = cam.thetaLL;
@@ -94,11 +99,10 @@ function handleLMB(cam, dX, dY) {
     if (cam.otheta < cam.othetaLL) cam.otheta = cam.othetaLL;
     if (cam.otheta > cam.othetaUL) cam.otheta = cam.othetaUL;
     cam.phi += cam.phiRate * dX;
-    console.log(cam.origin, camera.position);
   }
 }
 
-function handleMMB(cam, dX, dY) {
+function handleMMB(dX, dY) {
   if (cam.type==FreeCam) {
     // Not obvious:
     // default plane (theta=phi=0) is Y up, Z right, so put displacement
@@ -114,13 +118,13 @@ function handleMMB(cam, dX, dY) {
   }
 }
 
-function handleWheel(cam, d) {
+function handleWheel(d) {
   if (cam.type==FreeCam) {
-    cam.r += (d>0)?cam.rRate:(-1*cam.rRate);
+    cam.r += cam.r * ((d>0)?cam.rRate:(-1*cam.rRate));
     if (cam.r<cam.rLL) cam.r = cam.rLL;
   }
   if (cam.type==CylCam) {
-    cam.r += (d>0)?cam.rRate:(-1*cam.rRate);
+    cam.r += cam.r * ((d>0)?cam.rRate:(-1*cam.rRate));
     if (cam.r<cam.rLL) cam.r = cam.rLL;
   }
 }
