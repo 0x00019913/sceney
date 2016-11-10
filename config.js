@@ -11,7 +11,7 @@ project = {
 model = {
   name: "7_34k_js.json",
   normalMap: "7_34k_nm_2048.png",
-  flipped: true /* results in flipY = false */
+  flipY: true /* results in flipY = false */
 };
 project.models.push(model);
 config.projects['7'] = project;
@@ -40,8 +40,7 @@ project = {
   setup: {
     camera: {
       type: CylCam,
-      r: 30,
-      othetaUL: Math.PI/2
+      r: 30
     }
   }
 };
@@ -49,7 +48,7 @@ model = {
   name: "13_low_js.json",
   normalMap: "13_nm.BMP",
   normalScale: new THREE.Vector2(2,2),
-  flipped: true,
+  flipY: true,
   color: 0x111111,
   specular: 0x222121,
   shininess: 50
@@ -66,10 +65,60 @@ model = {
   name: "rock_js.json",
   normalMap: "rock_nm.BMP",
   normalScale: new THREE.Vector2(4,4),
-  flipped: true,
+  flipY: true,
   color: 0x222222,
   specular: 0x0,
   shininess: 30
+}
+project.models.push(model);
+model = {
+  name: "col6_js.json",
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading,
+  offset: [-30,50,-70],
+  scale: [15,15,15]
+}
+project.models.push(model);
+model = {
+  name: "col2_js.json",
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading,
+  offset: [40,52,-55],
+  scale: [15,15,15]
+}
+project.models.push(model);
+model = {
+  name: "col4_js.json",
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading,
+  offset: [5,50,-85],
+  scale: [15,15,15]
+}
+project.models.push(model);
+model = {
+  name: "col2_js.json",
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading,
+  offset: [-75,45,-30],
+  scale: [15,15,15]
+}
+project.models.push(model);
+model = {
+  name: "col4_js.json",
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading,
+  offset: [75,45,0],
+  scale: [15,15,15]
 }
 project.models.push(model);
 config.projects['13'] = project;
@@ -102,7 +151,7 @@ project.models.push(model);
 model = {
   name: "mural_low_js.json",
   normalMap: "mural_normal_512.bmp",
-  flipped: true
+  flipY: true
 }
 project.models.push(model);
 model = {

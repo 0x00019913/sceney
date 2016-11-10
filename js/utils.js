@@ -29,14 +29,10 @@ function loadModel(model, project, loader, textureLoader, dir) {
   if (model.shininess) material.shininess = model.shininess;
   if (model.normalMap) {
     material.normalMap = textureLoader.load(dir+model.normalMap,
-      function(t) {t.flipY=!model.flipped;});
+      function(t) {t.flipY=!model.flipY;});
   }
-  if (model.normalScale) {
-    material.normalScale = model.normalScale;
-  }
-  if (model.shading) {
-    material.shading = model.shading;
-  }
+  if (model.normalScale) material.normalScale = model.normalScale;
+  if (model.shading) material.shading = model.shading;
 
   loader.load(dir+model.name,
   function (geometry) {
@@ -51,6 +47,16 @@ function loadModel(model, project, loader, textureLoader, dir) {
       mesh.position.x += project.offset[0];
       mesh.position.y += project.offset[1];
       mesh.position.z += project.offset[2];
+    }
+    if (model.offset) {
+      mesh.position.x += model.offset[0];
+      mesh.position.y += model.offset[1];
+      mesh.position.z += model.offset[2];
+    }
+    if (model.scale) {
+      mesh.scale.x = model.scale[0];
+      mesh.scale.y = model.scale[1];
+      mesh.scale.z = model.scale[2];
     }
     mesh.castShadow = true;
     mesh.receiveShadow = true;
