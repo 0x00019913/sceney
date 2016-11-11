@@ -30,7 +30,7 @@ function loadModel(model, project, loader, textureLoader, dir) {
   if (m.shininess) material.shininess = m.shininess;
   if (m.normalMap) {
     material.normalMap = textureLoader.load(dir+m.normalMap,
-      function(t) {t.flipY=!m.flipY;});
+      function(t) { if ("flipY" in m) t.flipY = m.flipY; });
   }
   if (m.normalScale) material.normalScale = m.normalScale;
   if (m.shading) material.shading = m.shading;

@@ -12,7 +12,7 @@ model = {
   name: "7_34k_js.json",
   material: {
     normalMap: "7_34k_nm_2048.png",
-    flipY: true /* results in flipY = false */
+    flipY: false
   }
 };
 project.models.push(model);
@@ -53,7 +53,7 @@ model = {
   material: {
     normalMap: "13_nm.BMP",
     normalScale: new THREE.Vector2(2,2),
-    flipY: true,
+    flipY: false,
     color: 0x111111,
     specular: 0x222121,
     shininess: 50
@@ -74,7 +74,7 @@ model = {
   material: {
     normalMap: "rock_nm.BMP",
     normalScale: new THREE.Vector2(4,4),
-    flipY: true,
+    flipY: false,
     color: 0x222222,
     specular: 0x0,
     shininess: 30
@@ -101,7 +101,7 @@ model = {
     shininess: 30,
     shading: THREE.FlatShading
   },
-  offset: [40,52,-55],
+  offset: [52,52,-52],
   scale: [15,15,15]
 };
 project.models.push(model);
@@ -178,7 +178,7 @@ model = {
   name: "mural_low_js.json",
   material: {
     normalMap: "mural_normal_512.bmp",
-    flipY: true
+    flipY: false
   }
 };
 project.models.push(model);
