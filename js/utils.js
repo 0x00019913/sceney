@@ -86,13 +86,18 @@ function newMaterial(mat, textureLoader, dir) {
 
 function newMesh(geometry, project, params, material) {
   var mesh = new THREE.Mesh(geometry,material);
-  if (project.rotation) mesh.rotation.add(new THREE.Vector3().fromArray(project.rotation));
+
+  // incrementing
   if (project.offset) mesh.position.add(new THREE.Vector3().fromArray(project.offset));
+  if (project.scale) mesh.scale.multiply(new THREE.Vector3().fromArray(project.scale));
   if (params.offset) mesh.position.add(new THREE.Vector3().fromArray(params.offset));
   if (params.scale) mesh.scale.multiply(new THREE.Vector3().fromArray(params.scale));
-  // setting position instead of incrementing
-  if (project.position) mesh.position.set.apply(mesh.position, project.position);
+  // setting
+  if (params.rotation) mesh.rotation.set.apply(mesh.rotation, params.rotation);
+  else if (project.rotation) mesh.rotation.set.apply(mesh.rotation, project.rotation);
   if (params.position) mesh.position.set.apply(mesh.position, params.position);
+  else if (project.position) mesh.position.set.apply(mesh.position, project.position);
+
   if ("castShadow" in params) mesh.castShadow = params.castShadow;
   if ("receiveShadow" in params) mesh.receiveShadow = params.receiveShadow;
 

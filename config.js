@@ -77,9 +77,9 @@ model = {
     normalMap: "rock_nm.BMP",
     normalScale: new THREE.Vector2(4,4),
     flipY: false,
-    color: 0x222222,
+    color: 0x191919,
     specular: 0x0,
-    shininess: 30
+    shininess: 10
   }
 };
 project.models.push(model);
