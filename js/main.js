@@ -43,7 +43,7 @@ function init() {
   scene.add(cubeLight2);
 
   /* GEOMETRY */
-  var envGeometry = new THREE.BoxGeometry(200,200,200);
+  /*var envGeometry = new THREE.BoxGeometry(200,200,200);
   var envMaterial = new THREE.MeshPhongMaterial({
     color: 0x111111,
     specular: 0x0,
@@ -52,7 +52,7 @@ function init() {
   });
   var env = new THREE.Mesh(envGeometry, envMaterial);
   env.position.y = 80;
-  scene.add(env);
+  scene.add(env);*/
 
   loadProject(projectName, scene);
   positionCamera(camera);

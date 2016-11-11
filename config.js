@@ -2,6 +2,7 @@ var config = {};
 config.projects = {}
 var project = {};
 var model = {};
+var geo = {};
 
 // PROJECT 7
 project = {
@@ -40,6 +41,7 @@ config.projects['ANTELOPE'] = project;
 project = {
   name: "13",
   models: [],
+  geometry: [],
   offset: [0,8,0],
   setup: {
     camera: {
@@ -113,7 +115,7 @@ model = {
     shininess: 30,
     shading: THREE.FlatShading
   },
-  offset: [5,50,-85],
+  offset: [10,50,-85],
   scale: [15,15,15]
 };
 project.models.push(model);
@@ -141,6 +143,20 @@ model = {
   scale: [15,15,15]
 };
 project.models.push(model);
+geo = {
+  type: THREE.BoxGeometry,
+  params: [200,200,200],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x111111,
+    specular: 0x0,
+    shininess: 0,
+    side: THREE.BackSide
+  },
+  receiveShadow: false,
+  position: [0,80,0]
+};
+project.geometry.push(geo);
 config.projects['13'] = project;
 
 // PROJECT 46

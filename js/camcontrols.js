@@ -111,10 +111,12 @@ function handleMMB(dX, dY) {
     var displacement = new THREE.Vector3(0, dY*cam.yPanRate, dX*cam.xPanRate);
     displacement.applyAxisAngle(new THREE.Vector3(0,0,-1),Math.PI/2-cam.theta);
     displacement.applyAxisAngle(new THREE.Vector3(0,1,0),cam.phi);
-    displacement.x *= -1; // minus is necessary for some reason
+    // minus is necessary; I think it's because we're in a left-handed coord system
+    displacement.x *= -1;
     cam.origin.add(displacement);
   }
   if (cam.type==CylCam) {
+    cam.z -= dY*cam.zRate*cam.r;
   }
 }
 
