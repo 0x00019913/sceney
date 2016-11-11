@@ -24,15 +24,16 @@ function loadModel(model, project, loader, textureLoader, dir) {
     specular: 0x222222,
     shininess: 35
   });
-  if (model.color) material.color = new THREE.Color(model.color);
-  if (model.specular) material.specular = new THREE.Color(model.specular);
-  if (model.shininess) material.shininess = model.shininess;
-  if (model.normalMap) {
-    material.normalMap = textureLoader.load(dir+model.normalMap,
-      function(t) {t.flipY=!model.flipY;});
+  var m = model.material;
+  if (m.color) material.color = new THREE.Color(m.color);
+  if (m.specular) material.specular = new THREE.Color(m.specular);
+  if (m.shininess) material.shininess = m.shininess;
+  if (m.normalMap) {
+    material.normalMap = textureLoader.load(dir+m.normalMap,
+      function(t) {t.flipY=!m.flipY;});
   }
-  if (model.normalScale) material.normalScale = model.normalScale;
-  if (model.shading) material.shading = model.shading;
+  if (m.normalScale) material.normalScale = m.normalScale;
+  if (m.shading) material.shading = m.shading;
 
   loader.load(dir+model.name,
   function (geometry) {
