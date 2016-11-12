@@ -2,21 +2,34 @@ function loadProject(name, scene) {
   var project = config.projects[name];
   if (!project) return;
 
-  var model, geo;
+  var model, geo, light;
   var dir = "models/"+project.name+"/";
 
   var loader = new THREE.JSONLoader();
   var textureLoader = new THREE.TextureLoader();
 
   /* add all models in project */
-  for (var i=0; i<project.models.length; i++) {
-    model = project.models[i];
-    loadModel(model, project, loader, textureLoader, dir, scene);
+  if (project.models) {
+    for (var i=0; i<project.models.length; i++) {
+      model = project.models[i];
+      loadModel(model, project, loader, textureLoader, dir, scene);
+    }
   }
 
-  for (var i=0; i<project.geometry.length; i++) {
-    geo = project.geometry[i];
-    loadGeo(geo, project, textureLoader, dir, scene);
+  /* generate all geometry for project */
+  if (project.geometry) {
+    for (var i=0; i<project.geometry.length; i++) {
+      geo = project.geometry[i];
+      loadGeo(geo, project, textureLoader, dir, scene);
+    }
+  }
+
+  /* make the lights for project */
+  if (project.lights) {
+    for (var i=0; i<project.lights.length; i++) {
+      light = project.lights[i];
+      loadLight(light, project, scene);
+    }
   }
 
   doSetup(project.setup);
@@ -44,6 +57,13 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 
   var mesh = newMesh(geometry, project, geo, material);
   scene.add(mesh);
+}
+
+function loadLight(lt, project, scene) {
+  var light = newWithParams(lt.type, lt.params);
+  applyGenericProperties(light, project, lt);
+
+  scene.add(light);
 }
 
 function newWithParams(cls, params) {
@@ -87,24 +107,29 @@ function newMaterial(mat, textureLoader, dir) {
 function newMesh(geometry, project, params, material) {
   var mesh = new THREE.Mesh(geometry,material);
 
-  // incrementing
-  if (project.offset) mesh.position.add(new THREE.Vector3().fromArray(project.offset));
-  if (project.scale) mesh.scale.multiply(new THREE.Vector3().fromArray(project.scale));
-  if (params.offset) mesh.position.add(new THREE.Vector3().fromArray(params.offset));
-  if (params.scale) mesh.scale.multiply(new THREE.Vector3().fromArray(params.scale));
-  // setting
-  if (params.rotation) mesh.rotation.set.apply(mesh.rotation, params.rotation);
-  else if (project.rotation) mesh.rotation.set.apply(mesh.rotation, project.rotation);
-  if (params.position) mesh.position.set.apply(mesh.position, params.position);
-  else if (project.position) mesh.position.set.apply(mesh.position, project.position);
-
-  if ("castShadow" in params) mesh.castShadow = params.castShadow;
-  if ("receiveShadow" in params) mesh.receiveShadow = params.receiveShadow;
+  applyGenericProperties(mesh, project, params);
 
   return mesh;
 }
 
+function applyGenericProperties(obj, project, params) {
+  // incrementing
+  if (project.offset) obj.position.add(new THREE.Vector3().fromArray(project.offset));
+  if (project.scale) obj.scale.multiply(new THREE.Vector3().fromArray(project.scale));
+  if (params.offset) obj.position.add(new THREE.Vector3().fromArray(params.offset));
+  if (params.scale) obj.scale.multiply(new THREE.Vector3().fromArray(params.scale));
+  // setting
+  if (params.rotation) obj.rotation.set.apply(obj.rotation, params.rotation);
+  else if (project.rotation) obj.rotation.set.apply(obj.rotation, project.rotation);
+  if (params.position) obj.position.set.apply(obj.position, params.position);
+  else if (project.position) obj.position.set.apply(obj.position, project.position);
+
+  if ("castShadow" in params) obj.castShadow = params.castShadow;
+  if ("receiveShadow" in params) obj.receiveShadow = params.receiveShadow;
+}
+
 function doSetup(setup) {
+  if (!setup) return;
   if (setup.camera) {
     initCam(setup.camera);
   }

@@ -25,35 +25,7 @@ function init() {
   hemiLight.position.set(0,20,0);
   scene.add(hemiLight);
 
-  var cubeGeometry = new THREE.BoxGeometry(.1,.1,.1);
-  var cubeLight = new THREE.PointLight(0xffffff, 10, 100, 2);
-  var cubeLight2 = new THREE.PointLight(0xffffff, 2, 100, 2);
-  /*var cubeMat = new THREE.MeshStandardMaterial({
-    emissive: 0xffffff,
-    emissiveIntensity: 2,
-    color: 0x666666
-  });
-  cubeLight.add(new THREE.Mesh(cubeGeometry, cubeMat));
-  cubeLight2.add(new THREE.Mesh(cubeGeometry, cubeMat));*/
-  cubeLight.position.set(0,25,-5);
-  cubeLight2.position.set(0,5,10);
-  cubeLight.castShadow = true;
-  cubeLight2.castShadow = true;
-  scene.add(cubeLight);
-  scene.add(cubeLight2);
-
   /* GEOMETRY */
-  /*var envGeometry = new THREE.BoxGeometry(200,200,200);
-  var envMaterial = new THREE.MeshPhongMaterial({
-    color: 0x111111,
-    specular: 0x0,
-    shininess: 0,
-    side: THREE.BackSide
-  });
-  var env = new THREE.Mesh(envGeometry, envMaterial);
-  env.position.y = 80;
-  scene.add(env);*/
-
   loadProject(projectName, scene);
   positionCamera(camera);
 

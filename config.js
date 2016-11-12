@@ -3,6 +3,8 @@ config.projects = {}
 var project = {};
 var model = {};
 var geo = {};
+var light = {};
+var material = {};
 
 // PROJECT 7
 project = {
@@ -23,7 +25,15 @@ config.projects['7'] = project;
 project = {
   name: "ANTELOPE",
   models: [],
-  rotation: [-Math.PI/2, 0, 0]
+  rotation: [-Math.PI/2, 0, 0],
+  setup: {
+    camera: {
+      type: CylCam,
+      r: 2,
+      otheta: 2.8*Math.PI/4,
+      phi: Math.PI/4
+    }
+  }
 };
 model = {
   name: "antelope_38k_js.json",
@@ -32,7 +42,8 @@ model = {
     color: 0x999999,
     specular: 0xff0000,
     shininess: 30
-  }
+  },
+  position: [0,-3.5,.5]
 };
 project.models.push(model);
 config.projects['ANTELOPE'] = project;
@@ -42,6 +53,7 @@ project = {
   name: "13",
   models: [],
   geometry: [],
+  lights: [],
   offset: [0,8,0],
   setup: {
     camera: {
@@ -83,62 +95,43 @@ model = {
   }
 };
 project.models.push(model);
+material = {
+  color: 0x222222,
+  specular: 0x0,
+  shininess: 30,
+  shading: THREE.FlatShading
+};
 model = {
   name: "col6_js.json",
-  material: {
-    color: 0x222222,
-    specular: 0x0,
-    shininess: 30,
-    shading: THREE.FlatShading
-  },
+  material: material,
   offset: [-30,50,-70],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col2_js.json",
-  material: {
-    color: 0x222222,
-    specular: 0x0,
-    shininess: 30,
-    shading: THREE.FlatShading
-  },
+  material: material,
   offset: [52,52,-52],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col4_js.json",
-  material: {
-    color: 0x222222,
-    specular: 0x0,
-    shininess: 30,
-    shading: THREE.FlatShading
-  },
+  material: material,
   offset: [10,50,-85],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col2_js.json",
-  material: {
-    color: 0x222222,
-    specular: 0x0,
-    shininess: 30,
-    shading: THREE.FlatShading
-  },
+  material: material,
   offset: [-75,45,-30],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col4_js.json",
-  material: {
-    color: 0x222222,
-    specular: 0x0,
-    shininess: 30,
-    shading: THREE.FlatShading
-  },
+  material: material,
   offset: [75,45,0],
   scale: [15,15,15]
 };
@@ -157,6 +150,20 @@ geo = {
   position: [0,80,0]
 };
 project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 10, 100, 2],
+  position: [0,25,-5],
+  castShadow: true
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 2, 100, 2],
+  position: [0,5,10],
+  castShadow: true
+};
+project.lights.push(light);
 config.projects['13'] = project;
 
 // PROJECT 46

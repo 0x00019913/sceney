@@ -49,9 +49,9 @@ function initCam(params) {
       otheta: Math.PI/2,
       ophi: Math.PI, // likely won't use
       rRate: .1,
-      phiRate: 2,
-      zRate: 1,
-      othetaRate: -0.6,
+      phiRate: 8,
+      zRate: 1.5,
+      othetaRate: -1,
       ophiRate: -0.5,
       xPanRate: 2.5,
       yPanRate: 2.5,
@@ -116,7 +116,7 @@ function handleMMB(dX, dY) {
     cam.origin.add(displacement);
   }
   if (cam.type==CylCam) {
-    cam.z -= dY*cam.zRate*cam.r;
+    cam.z += dY*cam.zRate*cam.r;
   }
 }
 
