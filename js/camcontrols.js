@@ -49,7 +49,7 @@ function initCam(params) {
       otheta: Math.PI/2,
       ophi: Math.PI, // likely won't use
       rRate: .1,
-      phiRate: 8,
+      phiRate: 5,
       zRate: 1.5,
       othetaRate: -1,
       ophiRate: -0.5,

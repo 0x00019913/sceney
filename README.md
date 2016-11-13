@@ -13,4 +13,4 @@ Thus far:
 - Project 46 looks meh. Quite possibly won't finish.
 - Project 7 is next. Either that or the antelope skull from project 46.
 - Perhaps music? SunVox seems like a good candidate.
-- If not running this off some different machine, files can be locally loaded via server.js. Start it up in terminal (node server.js), then go to localhost:3000/index.html. Simply loading index.html doesn't work locally because something to do with security and not loading resources via the FILE protocol.
+- If not running this off some different machine, files can be locally loaded via server.js. Start it up in terminal ("nodejs server.js", assuming Node.JS is set up and you've installed Express via npm), then go to localhost:3000/index.html. Simply loading index.html doesn't work locally because something to do with security and not loading resources via the FILE protocol.

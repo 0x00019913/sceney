@@ -5,14 +5,14 @@ function loadProject(name, scene) {
   var model, geo, light;
   var dir = "models/"+project.name+"/";
 
-  var loader = new THREE.JSONLoader();
+  var loaders = {}, loader;
   var textureLoader = new THREE.TextureLoader();
 
   /* add all models in project */
   if (project.models) {
     for (var i=0; i<project.models.length; i++) {
       model = project.models[i];
-      loadModel(model, project, loader, textureLoader, dir, scene);
+      loadModel(model, project, loaders, textureLoader, dir, scene);
     }
   }
 
@@ -35,14 +35,47 @@ function loadProject(name, scene) {
   doSetup(project.setup);
 }
 
-function loadModel(model, project, loader, textureLoader, dir, scene) {
+function getLoader(model, loaders) {
+  var loader;
+  var format = model.format;
+  if (!format) {
+    format = "JSON"; // default format is JSON
+    model.format = format; // set missing format in config to default
+  }
+
+  // return loader if it exists
+  if (format in loaders) return loaders[format];
+
+  // make loader if doesn't exist
+  if (format=="JSON") loader = new THREE.JSONLoader();
+  if (format=="OBJ") loader = new THREE.OBJLoader();
+
+  // cache for future use and return
+  loaders[format] = loader;
+  return loader;
+}
+
+function loadModel(model, project, loaders, textureLoader, dir, scene) {
   var material = newMaterial(model.material, textureLoader, dir);
+  var loader = getLoader(model, loaders);
 
   loader.load(dir+model.name,
-  function (geometry) {
-    geometry.computeVertexNormals();
-    var mesh = newMesh(geometry, project, model, material);
-    scene.add(mesh);
+  function (obj) {
+    if (model.format=="JSON") {
+      obj.computeVertexNormals();
+      var mesh = new THREE.Mesh(obj, material);
+      applyGenericProperties(mesh, project, model);
+      scene.add(mesh);
+    }
+    if (model.format=="OBJ") {
+      obj.traverse (function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = material;
+        }
+      });
+      applyGenericProperties(obj, project, model);
+      scene.add(obj);
+    }
   },
   function (ret) {
     var percent = 100 * ret.loaded / ret.total;
@@ -55,14 +88,14 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 
   var material = newMaterial(geo.material);
 
-  var mesh = newMesh(geometry, project, geo, material);
+  var mesh = new THREE.Mesh(geometry, material);
+  applyGenericProperties(mesh, project, geo);
   scene.add(mesh);
 }
 
 function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
   applyGenericProperties(light, project, lt);
-
   scene.add(light);
 }
 
@@ -100,16 +133,9 @@ function newMaterial(mat, textureLoader, dir) {
   if ("normalScale" in mat) material.normalScale = mat.normalScale;
   if ("shading" in mat) material.shading = mat.shading;
   if ("side" in mat) material.side = mat.side;
+  if ("needsUpdate" in mat) material.needsUpdate = mat.needsUpdate;
 
   return material;
-}
-
-function newMesh(geometry, project, params, material) {
-  var mesh = new THREE.Mesh(geometry,material);
-
-  applyGenericProperties(mesh, project, params);
-
-  return mesh;
 }
 
 function applyGenericProperties(obj, project, params) {

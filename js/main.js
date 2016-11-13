@@ -4,7 +4,7 @@ var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var projectName = "13";
+var projectName = "39";
 
 init();
 animate();
@@ -23,7 +23,19 @@ function init() {
   //scene.add(dirLight);
   var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .1);
   hemiLight.position.set(0,20,0);
-  scene.add(hemiLight);
+  //scene.add(hemiLight);
+
+  var box = new THREE.BoxGeometry(.1,.1,.1);
+  var boxlight = new THREE.PointLight(0xffffff, 6, 100, 2);
+  var boxmat = new THREE.MeshStandardMaterial({
+    emissive: 0xff0000,
+    emissiveIntensity: 1,
+    color: 0x000000
+  });
+  boxlight.add(new THREE.Mesh(box, boxmat));
+  boxlight.castShadow = true;
+  boxlight.position.set(0,0,50);
+  //scene.add(boxlight);
 
   /* GEOMETRY */
   loadProject(projectName, scene);

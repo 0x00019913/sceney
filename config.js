@@ -25,13 +25,16 @@ config.projects['7'] = project;
 project = {
   name: "ANTELOPE",
   models: [],
+  geometry: [],
+  lights: [],
   rotation: [-Math.PI/2, 0, 0],
   setup: {
     camera: {
-      type: CylCam,
-      r: 2,
-      otheta: 2.8*Math.PI/4,
-      phi: Math.PI/4
+      type: FreeCam,
+      r: 30,
+      theta: Math.PI/4,
+      phi: Math.PI/4,
+      thetaUL: Math.PI/2
     }
   }
 };
@@ -39,13 +42,36 @@ model = {
   name: "antelope_38k_js.json",
   material: {
     normalMap: "antelope_nm.bmp",
-    color: 0x999999,
-    specular: 0xff0000,
-    shininess: 30
+    color: 0xffffff,
+    specular: 0x666666,
+    shininess: 5
   },
-  position: [0,-3.5,.5]
+  castShadow: true,
+  receiveShadow: true,
+  position: [0,0,.5],
+  scale: [10,10,10]
 };
 project.models.push(model);
+geo = {
+  type: THREE.BoxGeometry,
+  params: [200,200,200],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0xffffff,
+    specular: 0x0,
+    shininess: 0,
+    side: THREE.BackSide
+  },
+  receiveShadow: true,
+  position: [0,100,0]
+};
+project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 1, 100, 2],
+  position: [0,20,0]
+};
+project.lights.push(light);
 config.projects['ANTELOPE'] = project;
 
 // PROJECT 13
@@ -102,30 +128,30 @@ material = {
   shading: THREE.FlatShading
 };
 model = {
-  name: "col6_js.json",
+  name: "col2_js.json",
   material: material,
-  offset: [-30,50,-70],
+  offset: [-75,45,-30],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
-  name: "col2_js.json",
+  name: "col6_js.json",
   material: material,
-  offset: [52,52,-52],
+  offset: [-40,50,-70],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col4_js.json",
   material: material,
-  offset: [10,50,-85],
+  offset: [0,50,-85],
   scale: [15,15,15]
 };
 project.models.push(model);
 model = {
   name: "col2_js.json",
   material: material,
-  offset: [-75,45,-30],
+  offset: [47,52,-57],
   scale: [15,15,15]
 };
 project.models.push(model);
@@ -164,7 +190,65 @@ light = {
   castShadow: true
 };
 project.lights.push(light);
+light = {
+  type: THREE.HemisphereLight,
+  params: [0x999999, 0x000000, 0.1],
+  position: [0,20,0]
+};
+project.lights.push(light);
 config.projects['13'] = project;
+
+// PROJECT 39
+project = {
+  name: "39",
+  models: [],
+  geometry: [],
+  lights: [],
+  rotation: [Math.PI/2,0,Math.PI],
+  setup: {
+    camera: {
+      type: FreeCam,
+      r: 45,
+    }
+  }
+};
+model = {
+  name: "mosquito_357k.OBJ",
+  format: "OBJ",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x191919,
+    specular: 0xffffff,
+    shininess: 100
+  },
+  castShadow: true,
+  receiveShadow: true,
+  offset: [0,2.5,6.5]
+};
+project.models.push(model);
+geo = {
+  type: THREE.BoxGeometry,
+  params: [100,100,100],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x333333,
+    specular: 0x0,
+    shininess: 0,
+    side: THREE.BackSide,
+    needsUpdate: true
+  },
+  receiveShadow: true,
+  position: [0,0,50]
+};
+project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 6, 100, 2],
+  position: [0,0,50],
+  castShadow: true
+};
+project.lights.push(light);
+config.projects['39'] = project;
 
 // PROJECT 46
 project = {
