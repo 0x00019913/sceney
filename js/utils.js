@@ -86,7 +86,7 @@ function loadModel(model, project, loaders, textureLoader, dir, scene) {
 function loadGeo(geo, project, textureLoader, dir, scene) {
   var geometry = newWithParams(geo.type, geo.params);
 
-  var material = newMaterial(geo.material);
+  var material = newMaterial(geo.material, textureLoader, dir);
 
   var mesh = new THREE.Mesh(geometry, material);
   applyGenericProperties(mesh, project, geo);
@@ -128,6 +128,14 @@ function newMaterial(mat, textureLoader, dir) {
   if ("shininess" in mat) material.shininess = mat.shininess;
   if ("normalMap" in mat) {
     material.normalMap = textureLoader.load(dir+mat.normalMap,
+      function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
+  }
+  if ("bumpMap" in mat) {
+    material.bumpMap = textureLoader.load(dir+mat.bumpMap,
+      function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
+  }
+  if ("aoMap" in mat) {
+    material.aoMap = textureLoader.load(dir+mat.aoMap,
       function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
   }
   if ("normalScale" in mat) material.normalScale = mat.normalScale;
