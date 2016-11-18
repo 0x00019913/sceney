@@ -12,7 +12,7 @@ animate();
 function init() {
   container = document.getElementById('container');
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 1024);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 3000);
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0);
@@ -34,10 +34,10 @@ function init() {
   });
   boxlight.add(new THREE.Mesh(box, boxmat));
   boxlight.castShadow = true;
-  boxlight.position.set(0,0,50);
+  boxlight.position.set(0,20,50);
   //scene.add(boxlight);
 
-  
+
 
   /* GEOMETRY */
   loadProject(projectName, scene);

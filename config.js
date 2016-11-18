@@ -204,11 +204,13 @@ project = {
   models: [],
   geometry: [],
   lights: [],
-  rotation: [Math.PI/2,0,Math.PI],
+  rotation: [Math.PI,0,0],
   setup: {
     camera: {
       type: FreeCam,
       r: 100,
+      theta: Math.PI/4,
+      phi: -5*Math.PI/4
     }
   }
 };
@@ -218,46 +220,53 @@ model = {
   material: {
     type: THREE.MeshPhongMaterial,
     color: 0x191919,
-    specular: 0x111111,
-    shininess: 20
+    specular: 0x222222,
+    shininess: 70
   },
   castShadow: true,
   receiveShadow: true,
-  offset: [0,2.5,6.35]
+  offset: [0,6.35,0]
 };
 project.models.push(model);
-material = { // has normal map; for front face
-  type: THREE.MeshPhongMaterial,
-  normalMap: "mandala_inverted_normals_1024.bmp",
-  color: 0x252525,
-  shininess: 20,
-  specular: 0x333333,
-  side: THREE.BackSide,
-  needsUpdate: true
-};
-material1 = { // no normal map; for other faces
-  type: THREE.MeshStandardMaterial,
-  color: 0x252525,
-  shininess: 20,
-  specular: 0x333333,
-  side: THREE.BackSide,
-  needsUpdate: true
-};
 geo = {
   type: THREE.BoxGeometry,
-  params: [100,100,100],
+  params: [50,200,50],
   material: {
-    type: THREE.MeshFaceMaterial,
-    materials: [material1, material1, material, material1, material1, material1]
+    type: THREE.MeshPhongMaterial,
+    color: 0x111111,
+    specular: 0x151515,
+    shininess: 75,
+    needsUpdate: true
   },
   receiveShadow: true,
-  position: [0,0,50]
+  position: [0,-100,0]
 };
 project.geometry.push(geo);
 light = {
   type: THREE.PointLight,
-  params: [0xffffff, 6, 100, 2],
-  position: [0,0,50],
+  params: [0xffffff, 4, 100, 2],
+  position: [0,20,50],
+  castShadow: true
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 4, 100, 2],
+  position: [50,20,0],
+  castShadow: true
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 4, 100, 2],
+  position: [0,20,-50],
+  castShadow: true
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 4, 100, 2],
+  position: [-50,20,0],
   castShadow: true
 };
 project.lights.push(light);

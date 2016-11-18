@@ -96,7 +96,7 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
   applyGenericProperties(light, project, lt);
-  light.shadowCameraFar = 1000;
+  light.shadow.camera.far = 1000;
   scene.add(light);
 }
 
