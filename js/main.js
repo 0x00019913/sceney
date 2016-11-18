@@ -4,7 +4,7 @@ var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var projectName = "13";
+var projectName = "39";
 
 init();
 animate();
@@ -36,6 +36,8 @@ function init() {
   boxlight.castShadow = true;
   boxlight.position.set(0,0,50);
   //scene.add(boxlight);
+
+  
 
   /* GEOMETRY */
   loadProject(projectName, scene);

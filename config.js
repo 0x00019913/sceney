@@ -4,7 +4,7 @@ var project = {};
 var model = {};
 var geo = {};
 var light = {};
-var material = {};
+var material = {}, material1 = {};
 
 // PROJECT 7
 project = {
@@ -208,7 +208,7 @@ project = {
   setup: {
     camera: {
       type: FreeCam,
-      r: 45,
+      r: 100,
     }
   }
 };
@@ -218,29 +218,37 @@ model = {
   material: {
     type: THREE.MeshPhongMaterial,
     color: 0x191919,
-    specular: 0xffffff,
-    shininess: 100
+    specular: 0x111111,
+    shininess: 20
   },
   castShadow: true,
   receiveShadow: true,
-  offset: [0,2.5,6.5]
+  offset: [0,2.5,6.35]
 };
 project.models.push(model);
+material = { // has normal map; for front face
+  type: THREE.MeshPhongMaterial,
+  normalMap: "mandala_inverted_normals_1024.bmp",
+  color: 0x252525,
+  shininess: 20,
+  specular: 0x333333,
+  side: THREE.BackSide,
+  needsUpdate: true
+};
+material1 = { // no normal map; for other faces
+  type: THREE.MeshStandardMaterial,
+  color: 0x252525,
+  shininess: 20,
+  specular: 0x333333,
+  side: THREE.BackSide,
+  needsUpdate: true
+};
 geo = {
   type: THREE.BoxGeometry,
   params: [100,100,100],
   material: {
-    //type: THREE.MeshPhongMaterial,
-    type: THREE.MeshStandardMaterial,
-    //normalMap: "mandala_normals.bmp",
-    //aoMap: "mandala_occlusion.bmp",
-    bumpMap: "mandala_heights.bmp",
-    color: 0x555555,
-    metalness: 10,
-    //specular: 0x0,
-    //shininess: 100,
-    side: THREE.BackSide,
-    needsUpdate: true
+    type: THREE.MeshFaceMaterial,
+    materials: [material1, material1, material, material1, material1, material1]
   },
   receiveShadow: true,
   position: [0,0,50]

@@ -96,6 +96,7 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
   applyGenericProperties(light, project, lt);
+  light.shadowCameraFar = 1000;
   scene.add(light);
 }
 
@@ -114,13 +115,25 @@ function newWithParams(cls, params) {
 }
 
 function newMaterial(mat, textureLoader, dir) {
-  var material;
+  var material, faceMaterials;
 
   // if material not specified in config, return default material
   if (!mat) return new THREE.MeshPhongMaterial ({});
 
   // if type not specified, default material is Phong
-  if (mat.type) material = newWithParams(mat.type);
+  if (mat.type) {
+    if (mat.type==THREE.MeshFaceMaterial) {
+      // if MeshFaceMaterial, make new materials for each face and return
+      var faceMaterials = [];
+      for (var i=0; i<mat.materials.length; i++) {
+        faceMaterials.push(newMaterial(mat.materials[i], textureLoader, dir));
+      }
+      return new THREE.MeshFaceMaterial(faceMaterials);
+    }
+    else {
+      material = newWithParams(mat.type);
+    }
+  }
   else material = new THREE.MeshPhongMaterial({});
 
   if ("color" in mat) material.color = new THREE.Color(mat.color);
