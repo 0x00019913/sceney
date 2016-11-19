@@ -235,8 +235,7 @@ geo = {
     type: THREE.MeshPhongMaterial,
     color: 0x111111,
     specular: 0x151515,
-    shininess: 75,
-    needsUpdate: true
+    shininess: 75
   },
   receiveShadow: true,
   position: [0,-100,0]
@@ -245,29 +244,34 @@ project.geometry.push(geo);
 light = {
   type: THREE.PointLight,
   params: [0xffffff, 4, 100, 2],
-  position: [0,20,50],
-  castShadow: true
+  position: [0,20,50]
 };
 project.lights.push(light);
 light = {
   type: THREE.PointLight,
   params: [0xffffff, 4, 100, 2],
-  position: [50,20,0],
-  castShadow: true
+  position: [50,20,0]
 };
 project.lights.push(light);
 light = {
   type: THREE.PointLight,
   params: [0xffffff, 4, 100, 2],
-  position: [0,20,-50],
-  castShadow: true
+  position: [0,20,-50]
 };
 project.lights.push(light);
 light = {
   type: THREE.PointLight,
   params: [0xffffff, 4, 100, 2],
-  position: [-50,20,0],
-  castShadow: true
+  position: [-50,20,0]
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 3, 100, 2],
+  position: [0,20,0],
+  castShadow: true,
+  shadowMapWidth: 1024,
+  shadowMapHeight: 1024
 };
 project.lights.push(light);
 config.projects['39'] = project;

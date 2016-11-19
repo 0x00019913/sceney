@@ -19,11 +19,11 @@ function init() {
 
   /* LIGHTS */
   var dirLight = new THREE.DirectionalLight(0xffffff, .2);
-  dirLight.position.set(0,0,15);
-  //scene.add(dirLight);
+  dirLight.position.set(0,10,0);
+  scene.add(dirLight);
   var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .1);
-  hemiLight.position.set(0,20,0);
-  //scene.add(hemiLight);
+  hemiLight.position.set(0,10,0);
+  scene.add(hemiLight);
 
   var box = new THREE.BoxGeometry(.1,.1,.1);
   var boxlight = new THREE.PointLight(0xffffff, 6, 100, 2);
@@ -34,7 +34,7 @@ function init() {
   });
   boxlight.add(new THREE.Mesh(box, boxmat));
   boxlight.castShadow = true;
-  boxlight.position.set(0,20,50);
+  boxlight.position.set(0,50,0);
   //scene.add(boxlight);
 
 

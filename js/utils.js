@@ -71,9 +71,9 @@ function loadModel(model, project, loaders, textureLoader, dir, scene) {
       obj.traverse (function(child) {
         if (child instanceof THREE.Mesh) {
           child.material = material;
+          applyGenericProperties(child, project, model);
         }
       });
-      applyGenericProperties(obj, project, model);
       scene.add(obj);
     }
   },
@@ -97,6 +97,8 @@ function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
   applyGenericProperties(light, project, lt);
   light.shadow.camera.far = 1000;
+  if ("shadowMapWidth" in lt) light.shadow.mapSize.width=lt.shadowMapWidth;
+  if ("shadowMapHeight" in lt) light.shadow.mapSize.height=lt.shadowMapHeight;
   scene.add(light);
 }
 
