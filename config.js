@@ -6,13 +6,13 @@ var geo = {};
 var light = {};
 var material = {}, material1 = {};
 
-// PROJECT DEFAULT
+// PROJECT FOO
 project = {
-  name: "DEFAULT",
+  name: "FOO",
   geometry: [],
   lights: []
 };
-config.projects["DEFAULT"] = project;
+//config.projects["FOO"] = project;
 geo = {
   type: THREE.PlaneGeometry,
   params: [10,5],
@@ -49,6 +49,7 @@ project.lights.push(light);
 // PROJECT 7
 project = {
   name: "7",
+  altName: "Some Kind of Sphinx",
   models: []
 };
 config.projects['7'] = project;
@@ -61,9 +62,10 @@ model = {
 };
 project.models.push(model);
 
-// PROJECT ANTELOPE
+// PROJECT 46
 project = {
-  name: "ANTELOPE",
+  name: "46",
+  altName: "The Antelope Skull",
   models: [],
   geometry: [],
   lights: [],
@@ -78,7 +80,7 @@ project = {
     }
   }
 };
-config.projects['ANTELOPE'] = project;
+config.projects['46'] = project;
 model = {
   name: "antelope_38k_js.json",
   material: {
@@ -117,6 +119,7 @@ project.lights.push(light);
 // PROJECT 13
 project = {
   name: "13",
+  altName: "The High Priestess",
   models: [],
   geometry: [],
   lights: [],
@@ -241,6 +244,7 @@ project.lights.push(light);
 // PROJECT 39
 project = {
   name: "39",
+  altName: "An Ornate Mosquito",
   models: [],
   geometry: [],
   lights: [],
@@ -256,7 +260,7 @@ project = {
 };
 config.projects['39'] = project;
 model = {
-  name: "mosquito_357k.OBJ",
+  name: "mosquito_107k.OBJ",
   format: "OBJ",
   material: {
     type: THREE.MeshPhongMaterial,

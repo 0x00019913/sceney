@@ -1,6 +1,7 @@
 html,body {
   margin: 0px;
   font-family: 'adobe-garamond-pro', sans-serif;
+  font-weight: normal;
   color: white;
 }
 
@@ -43,4 +44,14 @@ html,body {
   width: 32px;
   height: 32px;
   margin-left: 144px;
+}
+
+#menu {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 320px;
+}
+
+menuItem {
 }
