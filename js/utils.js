@@ -178,8 +178,9 @@ function applyGenericProperties(obj, project, params) {
 }
 
 function doSetup(setup) {
-  if (!setup) return;
-  if (setup.camera) {
-    initCam(setup.camera);
+  if (!setup) {
+    initCam(null);
+    return;
   }
+  initCam(setup.camera);
 }

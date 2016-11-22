@@ -6,6 +6,8 @@ var mouseButton = -1;
 
 var projectName = "39";
 
+var running = true;
+
 init();
 animate();
 
@@ -17,28 +19,6 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0);
 
-  /* LIGHTS */
-  var dirLight = new THREE.DirectionalLight(0xffffff, .2);
-  dirLight.position.set(0,10,0);
-  scene.add(dirLight);
-  var hemiLight = new THREE.HemisphereLight(0x999999, 0x000000, .1);
-  hemiLight.position.set(0,10,0);
-  scene.add(hemiLight);
-
-  var box = new THREE.BoxGeometry(.1,.1,.1);
-  var boxlight = new THREE.PointLight(0xffffff, 6, 100, 2);
-  var boxmat = new THREE.MeshStandardMaterial({
-    emissive: 0xff0000,
-    emissiveIntensity: 1,
-    color: 0x000000
-  });
-  boxlight.add(new THREE.Mesh(box, boxmat));
-  boxlight.castShadow = true;
-  boxlight.position.set(0,50,0);
-  //scene.add(boxlight);
-
-
-
   /* GEOMETRY */
   loadProject(projectName, scene);
   positionCamera(camera);
@@ -46,10 +26,15 @@ function init() {
   /* RENDER */
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.shadowMap.enabled = true;
+  renderer.toneMapping = THREE.ReinhardToneMapping;
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
+  addEventListeners();
+}
+
+function addEventListeners() {
   document.body.addEventListener('mousemove', onMousemove, false);
   document.body.addEventListener('mousedown', onMouseDown, false);
   document.body.addEventListener('mouseup', onMouseUp, false);
@@ -60,6 +45,7 @@ function init() {
 }
 
 function onMousemove (e) {
+  if (!running) return;
   mouseXprev = mouseX;
   mouseYprev = mouseY;
   mouseX = (e.clientX / window.innerWidth) * 2 - 1;
@@ -94,7 +80,7 @@ function onWindowResize() {
 
 function animate() {
   requestAnimationFrame(animate);
-  render();
+  if (running) render();
 }
 
 function render() {

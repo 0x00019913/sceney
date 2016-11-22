@@ -6,11 +6,52 @@ var geo = {};
 var light = {};
 var material = {}, material1 = {};
 
+// PROJECT DEFAULT
+project = {
+  name: "DEFAULT",
+  geometry: [],
+  lights: []
+};
+config.projects["DEFAULT"] = project;
+geo = {
+  type: THREE.PlaneGeometry,
+  params: [10,5],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x999999,
+    specular: 0x555555,
+    shininess: 0
+  },
+  receiveShadow: true
+};
+project.geometry.push(geo);
+geo = {
+  type: THREE.SphereGeometry,
+  params: [.1,32,24],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x222222,
+    specular: 0x555555,
+    shininess: 0
+  },
+  position: [-4,-2,0.2],
+  castShadow: true
+};
+project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff,2,100,2],
+  position: [-5,-2.5,2],
+  castShadow: true
+};
+project.lights.push(light);
+
 // PROJECT 7
 project = {
   name: "7",
   models: []
 };
+config.projects['7'] = project;
 model = {
   name: "7_34k_js.json",
   material: {
@@ -19,7 +60,6 @@ model = {
   }
 };
 project.models.push(model);
-config.projects['7'] = project;
 
 // PROJECT ANTELOPE
 project = {
@@ -38,6 +78,7 @@ project = {
     }
   }
 };
+config.projects['ANTELOPE'] = project;
 model = {
   name: "antelope_38k_js.json",
   material: {
@@ -72,7 +113,6 @@ light = {
   position: [0,20,0]
 };
 project.lights.push(light);
-config.projects['ANTELOPE'] = project;
 
 // PROJECT 13
 project = {
@@ -88,6 +128,7 @@ project = {
     }
   }
 };
+config.projects['13'] = project;
 model = {
   name: "13_low_js.json",
   material: {
@@ -196,7 +237,6 @@ light = {
   position: [0,20,0]
 };
 project.lights.push(light);
-config.projects['13'] = project;
 
 // PROJECT 39
 project = {
@@ -204,16 +244,17 @@ project = {
   models: [],
   geometry: [],
   lights: [],
-  rotation: [Math.PI,0,0],
+  rotation: [3*Math.PI/2,Math.PI,0],
   setup: {
     camera: {
       type: FreeCam,
-      r: 100,
-      theta: Math.PI/4,
-      phi: -5*Math.PI/4
+      r: 20,
+      phiLL: 0,
+      phiUL: Math.PI
     }
   }
 };
+config.projects['39'] = project;
 model = {
   name: "mosquito_357k.OBJ",
   format: "OBJ",
@@ -223,125 +264,28 @@ model = {
     specular: 0x222222,
     shininess: 70
   },
+  offset: [0,3,0],
   castShadow: true,
-  receiveShadow: true,
-  offset: [0,6.35,0]
+  receiveShadow: true
 };
 project.models.push(model);
 geo = {
-  type: THREE.BoxGeometry,
-  params: [50,200,50],
+  type: THREE.PlaneGeometry,
+  params: [200,200],
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x111111,
-    specular: 0x151515,
-    shininess: 75
+    color: 0x050505,
+    specular: 0x111111,
+    shininess: 30
   },
-  receiveShadow: true,
-  position: [0,-100,0]
+  rotation: [0,0,Math.PI/2],
+  position: [0,0,-6.35]
 };
 project.geometry.push(geo);
 light = {
   type: THREE.PointLight,
   params: [0xffffff, 4, 100, 2],
-  position: [0,20,50]
+  position: [0,0,5],
+  castShadow: true
 };
 project.lights.push(light);
-light = {
-  type: THREE.PointLight,
-  params: [0xffffff, 4, 100, 2],
-  position: [50,20,0]
-};
-project.lights.push(light);
-light = {
-  type: THREE.PointLight,
-  params: [0xffffff, 4, 100, 2],
-  position: [0,20,-50]
-};
-project.lights.push(light);
-light = {
-  type: THREE.PointLight,
-  params: [0xffffff, 4, 100, 2],
-  position: [-50,20,0]
-};
-project.lights.push(light);
-light = {
-  type: THREE.PointLight,
-  params: [0xffffff, 3, 100, 2],
-  position: [0,20,0],
-  castShadow: true,
-  shadowMapWidth: 1024,
-  shadowMapHeight: 1024
-};
-project.lights.push(light);
-config.projects['39'] = project;
-
-// PROJECT 46
-project = {
-  name: "46",
-  models: [],
-  offset: [0, 2.5, 1]
-};
-model = {
-  name: "hearth_bot_low_js.json",
-  material: {
-    normalMap: "hearth_bot_1024_normals.bmp"
-  }
-};
-project.models.push(model);
-model = {
-  name: "column_bot_js.json",
-  material: {
-    shading: THREE.FlatShading
-  }
-};
-project.models.push(model);
-model = {
-  name: "column_bot_ornament_low_new_js.json",
-  material: {
-    normalMap: "column_bot_ornament_normals_512.bmp"
-  }
-};
-project.models.push(model);
-model = {
-  name: "hearth_top_base_js.json"
-};
-project.models.push(model);
-model = {
-  name: "mural_low_js.json",
-  material: {
-    normalMap: "mural_normal_512.bmp",
-    flipY: false
-  }
-};
-project.models.push(model);
-model = {
-  name: "mural_border_base_js.json",
-  material: {
-    shading: THREE.FlatShading
-  }
-};
-project.models.push(model);
-model = {
-  name: "column_top_js.json",
-  material: {
-    shading: THREE.FlatShading
-  }
-};
-project.models.push(model);
-model = {
-  name: "plaque_js.json",
-  material: {
-    shading: THREE.FlatShading
-  }
-};
-project.models.push(model);
-model = {
-  name: "skulls_js.json",
-  material: {
-    normalMap: "skull_normals.bmp"
-  }
-};
-project.models.push(model);
-
-config.projects['46'] = project;

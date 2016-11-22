@@ -22,10 +22,11 @@ var cam;
 epsilon = .01;
 
 function initCam(params) {
+  if (!params) params = { type: FreeCam };
   if (params.type==FreeCam) {
     cam = {
       type: FreeCam,
-      r: 20,
+      r: 5,
       phi: Math.PI/2,
       theta: Math.PI/2,
       rRate: .1,
@@ -35,6 +36,8 @@ function initCam(params) {
       yPanRate: 2.5,
       thetaLL: epsilon,
       thetaUL: Math.PI-epsilon,
+      phiLL: null,
+      phiUL: null,
       rLL: epsilon,
       origin: new THREE.Vector3(0,0,0)
     };
@@ -68,6 +71,7 @@ function initCam(params) {
 }
 
 function positionCamera(camera) {
+  if (!cam) return;
   if (cam.type==FreeCam) {
     camera.position.x = cam.r * Math.cos(cam.phi) * Math.sin(cam.theta) + cam.origin.x;
     camera.position.z = cam.r * Math.sin(cam.phi) * Math.sin(cam.theta) + cam.origin.z;
@@ -90,9 +94,11 @@ function positionCamera(camera) {
 function handleLMB(dX, dY) {
   if (cam.type==FreeCam) {
     cam.theta += cam.thetaRate * dY;
-    if (cam.theta < cam.thetaLL) cam.theta = cam.thetaLL;
-    if (cam.theta > cam.thetaUL) cam.theta = cam.thetaUL;
+    if ("thetaLL" in cam && cam.theta < cam.thetaLL) cam.theta = cam.thetaLL;
+    if ("thetaUL" in cam && cam.theta > cam.thetaUL) cam.theta = cam.thetaUL;
     cam.phi += cam.phiRate * dX;
+    if ("phiLL" in cam && cam.phi < cam.phiLL) cam.phi = cam.phiLL;
+    if ("phiUL" in cam && cam.phi > cam.phiUL) cam.phi = cam.phiUL;
   }
   if (cam.type==CylCam) {
     cam.otheta -= cam.othetaRate * dY;

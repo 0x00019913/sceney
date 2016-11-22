@@ -1,17 +1,41 @@
 <html>
   <head>
     <title>0x00019913 Index</title>
-    <style>
-      body {
-      margin: 0px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://use.typekit.net/lqt1hgk.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   </head>
 
   <body>
     <div id="container"></div>
+    <div id="ui-overlay">
+      <div id="intro">
+        <h1>0x00019913</h1>
+
+        <p>This is me.</p>
+
+        <p>Educated in physics and computer science.</p>
+
+        <p>Interested and somewhat experienced in 3D modeling and graphics.</p>
+
+        <p>Fond of terse introductions.</p>
+
+        <p>Possibly a mosquito?</p>
+
+        <p>This is my attempt at <br />1. showing my models in 3D (as opposed to simply on renders) and <br />2. a robust method of building scenes from multiple separate models, primitives, and lights.</p>
+
+        <p>TODO: implement walking controls, implement a way of switching scenes (menu on the left), make camera work on mobile.</p>
+
+        <p>This text is in Adobe Garamond Pro, courtesy of Adobe Typekit.</p>
+
+        <div id="logo"></div>
+      </div>
+      <div id="menu">
+
+      </div>
+    </div>
 
     <script src="js/three.min.js"></script>
     <script src="js/camcontrols.js"></script>
@@ -20,5 +44,6 @@
     <script src="js/loaders/OBJLoader.js"></script>
     <script src="js/loaders/ColladaLoader.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/ui.js"></script>
   </body>
 </html>
