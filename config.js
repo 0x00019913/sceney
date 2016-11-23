@@ -264,7 +264,7 @@ model = {
   format: "OBJ",
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x191919,
+    color: 0x111111,
     specular: 0x222222,
     shininess: 70
   },
@@ -275,10 +275,10 @@ model = {
 project.models.push(model);
 geo = {
   type: THREE.PlaneGeometry,
-  params: [200,200],
+  params: [2000,2000],
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x050505,
+    color: 0x111111,
     specular: 0x111111,
     shininess: 30
   },
@@ -288,8 +288,14 @@ geo = {
 project.geometry.push(geo);
 light = {
   type: THREE.PointLight,
-  params: [0xffffff, 4, 100, 2],
+  params: [0xffffff, 4, 0, 2],
   position: [0,0,5],
   castShadow: true
 };
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff,1,0,2],
+  position: [0,0,50]
+}
 project.lights.push(light);

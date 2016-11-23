@@ -2,8 +2,7 @@
   <head>
     <title>0x00019913 Index</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="https://use.typekit.net/lqt1hgk.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <link href="https://fonts.googleapis.com/css?family=Crete+Round|Poiret+One" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   </head>
@@ -11,30 +10,38 @@
   <body>
     <div id="container"></div>
     <div id="ui-overlay">
-      <div id="intro">
+      <div id="overbar">
+        <div class="top-button" id="top-button-menu">
+          <p>Menu</p>
+        </div>
+        <div class="top-button">
+          <div id="button-logo"></div>
+        </div>
+        <div class="top-button" id="top-button-info">
+          <p>About</p>
+        </div>
+      </div>
+      <div id="info" class="inactive">
         <h1>0x00019913</h1>
 
         <p>This is me.</p>
 
-        <p>Educated in physics and computer science.</p>
-
-        <p>Interested and somewhat experienced in 3D modeling and graphics.</p>
-
-        <p>Fond of terse introductions.</p>
+        <p>Educated in physics and computer science, interested and somewhat experienced in 3D modeling and graphics, fond of terse introductions.</p>
 
         <p>Possibly a mosquito?</p>
 
         <p>This is my attempt at <br />1. showing my models in 3D (as opposed to simply on renders) and <br />2. a robust method of building scenes from multiple separate models, primitives, and lights.</p>
 
-        <p>TODO: implement walking controls, implement a way of switching scenes (menu on the left), perhaps make camera work on mobile.</p>
-
-        <p>This text is in Adobe Garamond Pro, courtesy of Adobe Typekit.</p>
+        <p>TODO: implement walking controls, implement a way of switching scenes (with a menu), perhaps make camera work on mobile, make menus prettier.</p>
 
         <div id="logo"></div>
       </div>
-      <div id="menu">
-        <p>PROJECTS:</p>
+      <div id="menu" class="inactive">
+        <p>SCENES:</p>
       </div>
+    </div>
+
+    <div id="loading-overlay">
     </div>
 
     <script src="js/three.min.js"></script>

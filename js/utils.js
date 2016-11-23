@@ -59,6 +59,8 @@ function loadModel(model, project, loaders, textureLoader, dir, scene) {
   var material = newMaterial(model.material, textureLoader, dir);
   var loader = getLoader(model, loaders);
 
+  addLoadingElement(model.name);
+
   loader.load(dir+model.name,
   function (obj) {
     if (model.format=="JSON") {
@@ -96,7 +98,6 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
   applyGenericProperties(light, project, lt);
-  light.shadow.camera.far = 1000;
   if ("shadowMapWidth" in lt) light.shadow.mapSize.width=lt.shadowMapWidth;
   if ("shadowMapHeight" in lt) light.shadow.mapSize.height=lt.shadowMapHeight;
   scene.add(light);
@@ -183,4 +184,30 @@ function doSetup(setup) {
     return;
   }
   initCam(setup.camera);
+}
+
+function clearScene() {
+  for (var i=scene.children.length-1; i>=0; i--) {
+    scene.remove(scene.children[i]);
+  }
+}
+
+function addLoadingElement(name) {
+    var overlay = document.getElementById('loading-overlay');
+
+    var el = document.createElement('div');
+    el.className = "loadingElement";
+
+    var elementName = document.createElement('div');
+    elementName.className = "elementName";
+    elementName.innerHTML = name.toUpperCase();
+
+    var progressBar = document.createElement('div');
+    progressBar.className = "progressBar";
+    progressBar.id = name + "progress";
+
+    el.appendChild(elementName);
+    el.appendChild(progressBar);
+
+    overlay.appendChild(el);
 }

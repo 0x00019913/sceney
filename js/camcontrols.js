@@ -32,8 +32,8 @@ function initCam(params) {
       rRate: .1,
       thetaRate: -3,
       phiRate: 3,
-      xPanRate: 2.5,
-      yPanRate: 2.5,
+      xPanRate: 1,
+      yPanRate: 1,
       thetaLL: epsilon,
       thetaUL: Math.PI-epsilon,
       phiLL: null,
@@ -112,9 +112,9 @@ function handleMMB(dX, dY) {
   if (cam.type==FreeCam) {
     // Not obvious:
     // default plane (theta=phi=0) is Y up, Z right, so put displacement
-    // vector in that plane, rotate around Z to adjust for theta,
-    // then rotate around Y to adjust for phi
-    var displacement = new THREE.Vector3(0, dY*cam.yPanRate, dX*cam.xPanRate);
+    // vector in that plane (larger for larger r), rotate around Z to adjust
+    // for theta, then rotate around Y to adjust for phi
+    var displacement = new THREE.Vector3(0, dY*cam.yPanRate*cam.r, dX*cam.xPanRate*cam.r);
     displacement.applyAxisAngle(new THREE.Vector3(0,0,-1),Math.PI/2-cam.theta);
     displacement.applyAxisAngle(new THREE.Vector3(0,1,0),cam.phi);
     // minus is necessary; I think it's because we're in a left-handed coord system
