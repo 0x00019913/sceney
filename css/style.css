@@ -38,22 +38,32 @@ html,body {
 }
 
 .top-button {
-  height: 50px;
+  height: 48px;
   width: 100px;
   margin: 0px;
   padding: 0px;
   display: inline-block;
   cursor: pointer;
   vertical-align: bottom;
+  border-bottom: 2px solid #000;
+  transition: border-bottom 400ms ease;
+}
+
+.top-button:hover {
+  border-bottom: 2px solid #f00;
+}
+
+.button-active {
+  border-bottom: 2px solid #f00;
 }
 
 .top-button p {
-  margin-top: 16px;
+  margin-top: 15px;
   font-size: 18px;
 }
 
-#button-logo {
-  height: 50px;
+.button-logo {
+  height: 48px;
   width: 50px;
   margin: 0 auto;
   background-image: url('../img/logo.png');
@@ -63,7 +73,19 @@ html,body {
   cursor: pointer;
 }
 
-#info, #menu {
+.title-left {
+  position: absolute;
+  left: 0px;
+  height: 48px;
+  margin: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: default;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+#info, #scenes {
   position: absolute;
   left: 50%;
   margin-top: 0px;
@@ -74,25 +96,30 @@ html,body {
   font-size: 18px;
   background: rgba(0,0,0,0.8);
   opacity: 0;
-  transition: opacity 300ms ease, margin-top 300ms ease;
+  visibility: hidden;
+  transition: visibility 300ms, opacity 300ms ease, margin-top 300ms ease;
 }
 
-#info.active {
+#info.menu-active {
+  visibility: visible;
   margin-top: 50px;
   opacity: 1;
 }
 
-#info.inactive {
+#info.menu-inactive {
+  visibility: hidden;
   margin-top: 0px;
   opacity: 0;
 }
 
-#menu.active {
+#scenes.menu-active {
+  visibility: visible;
   margin-top: 50px;
   opacity: 1;
 }
 
-#menu.inactive {
+#scenes.menu-inactive {
+  visibility: hidden;
   margin-top: 0px;
   opacity: 0;
 }
@@ -105,8 +132,19 @@ html,body {
   margin-left: 144px;
 }
 
-menuItem {
+.menu-item {
   cursor: pointer;
+  margin: 0px;
+  height: 30px;
+  padding-top: 6px;
+  border-left: 2px solid rgba(0,0,0,0);
+  border-right: 2px solid rgba(0,0,0,0);
+  transition: border-left 400ms ease, border-right 400ms ease;
+}
+
+.menu-item:hover {
+  border-left: 2px solid rgba(255,0,0,1);
+  border-right: 2px solid rgba(255,0,0,1);
 }
 
 #loading-overlay {

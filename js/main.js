@@ -20,7 +20,7 @@ function init() {
   scene.background = new THREE.Color(0x0);
 
   /* GEOMETRY */
-  loadProject(projectName, scene);
+  loadProject(projectName);
   positionCamera(camera);
 
   /* RENDER */

@@ -50,22 +50,68 @@ project.lights.push(light);
 project = {
   name: "7",
   altName: "Some Kind of Sphinx",
-  models: []
-};
-config.projects['7'] = project;
-model = {
-  name: "7_34k_js.json",
-  material: {
-    normalMap: "7_34k_nm_2048.png",
-    flipY: false
+  models: [],
+  lights: [],
+  setup: {
+    camera: {
+      type: FreeCam,
+      r: 10
+    }
   }
 };
+//config.projects['7'] = project;
+model = {
+  name: "7_29k_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0xd2d690,
+    specular: 0xffffff,
+    shininess: 50,
+    shading: THREE.SmoothShading,
+    normalMap: "7_29k_nm.png",
+    flipY: false
+  },
+  receiveShadow: true
+};
 project.models.push(model);
+material = {
+  type: THREE.MeshPhongMaterial,
+  color: 0xd2d690,
+  specular: 0xffffff,
+  shininess: 50,
+  shading: THREE.SmoothShading
+};
+model = {
+  name: "horns_js.json",
+  material: material,
+  receiveShadow: true
+};
+project.models.push(model);
+model = {
+  name: "spine_js.json",
+  material: material,
+  receiveShadow: true
+};
+project.models.push(model);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff,2,100,2],
+  position: [0,5,-5],
+  castShadow: true
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff,2,100,2],
+  position: [0,5,5],
+  castShadow: true
+};
+project.lights.push(light);
 
 // PROJECT 46
 project = {
   name: "46",
-  altName: "The Antelope Skull",
+  altName: "The Antelope Skull (WIP)",
   models: [],
   geometry: [],
   lights: [],
@@ -241,6 +287,73 @@ light = {
 };
 project.lights.push(light);
 
+// PROJECT 14
+project = {
+  name: "14",
+  altName: "The Tower (WIP)",
+  models: [],
+  geometry: [],
+  lights: [],
+  setup: {
+    camera: {
+      type: CylCam,
+      r: 20,
+      z: 1,
+      phi: Math.PI
+    }
+  }
+};
+config.projects['14'] = project;
+model = {
+  name: "shroom_low_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x060606,
+    specular: 0x151515,
+    shininess: 20,
+    normalMap: "shroom_nm.jpg",
+    flipY: false,
+    normalScale: new THREE.Vector2(2,2)
+  }
+};
+project.models.push(model);
+model = {
+  name: "rock_low_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x020202,
+    specular: 0x050505,
+    shininess: 10,
+    normalMap: "rock_nm.jpg",
+    flipY: false,
+    normalScale: new THREE.Vector2(4,4)
+  }
+};
+project.models.push(model);
+model = {
+  name: "eyes_low_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x100000,
+    specular: 0xdd0000,
+    shininess: 100
+  }
+};
+project.models.push(model);
+light = {
+  type: THREE.PointLight,
+  params: [0xffdddd, 7, 100, 2],
+  position: [10,5,0]
+};
+project.lights.push(light);
+project.models.push(model);
+light = {
+  type: THREE.PointLight,
+  params: [0xffdddd, 7, 100, 2],
+  position: [-10,5,0]
+};
+project.lights.push(light);
+
 // PROJECT 39
 project = {
   name: "39",
@@ -252,7 +365,7 @@ project = {
   setup: {
     camera: {
       type: FreeCam,
-      r: 20,
+      r: 25,
       phiLL: 0,
       phiUL: Math.PI
     }

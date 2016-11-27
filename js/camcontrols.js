@@ -20,6 +20,7 @@ var CylCam = 1;
 
 var cam;
 epsilon = .01;
+initCam();
 
 function initCam(params) {
   if (!params) params = { type: FreeCam };
@@ -36,8 +37,6 @@ function initCam(params) {
       yPanRate: 1,
       thetaLL: epsilon,
       thetaUL: Math.PI-epsilon,
-      phiLL: null,
-      phiUL: null,
       rLL: epsilon,
       origin: new THREE.Vector3(0,0,0)
     };

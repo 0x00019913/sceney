@@ -1,4 +1,5 @@
-function loadProject(name, scene) {
+function loadProject(name) {
+  console.log("Project name: ",name);
   var project = config.projects[name];
   if (!project) return;
 
@@ -64,6 +65,7 @@ function loadModel(model, project, loaders, textureLoader, dir, scene) {
   loader.load(dir+model.name,
   function (obj) {
     if (model.format=="JSON") {
+      obj.mergeVertices();
       obj.computeVertexNormals();
       var mesh = new THREE.Mesh(obj, material);
       applyGenericProperties(mesh, project, model);
@@ -148,7 +150,11 @@ function newMaterial(mat, textureLoader, dir) {
   }
   if ("bumpMap" in mat) {
     material.bumpMap = textureLoader.load(dir+mat.bumpMap,
-      function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
+      function(t) { if ("flipY" in mat) t.flipY = mat.flipY; },
+      function (ret) {
+        var percent = 100 * ret.loaded / ret.total;
+        console.log(Math.round(percent, 2) + "% downloaded: " + mat.bumpMap);
+      });
   }
   if ("aoMap" in mat) {
     material.aoMap = textureLoader.load(dir+mat.aoMap,
