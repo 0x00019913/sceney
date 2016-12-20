@@ -1,3 +1,11 @@
+/* params in config that require special handling;
+   can iterate over all other params and set them automatically */
+var specialParams = {
+  model: ["name", "format", "material", "position", "offset", "rotation", "scale"],
+  geolight: ["type", "params", "material", "position", "offset", "rotation", "scale"],
+  material: ["type", "color", "specular", "map", "normalMap", "bumpMap", "aoMap", "shadowMapWidth", "shadowMapHeight"]
+};
+
 var config = {};
 config.projects = {}
 var project = {};
@@ -5,6 +13,7 @@ var model = {};
 var geo = {};
 var light = {};
 var material = {}, material1 = {};
+var uniforms = {};
 
 // PROJECT FOO
 project = {
@@ -220,38 +229,51 @@ material = {
 model = {
   name: "col2_js.json",
   material: material,
-  offset: [-75,45,-30],
-  scale: [15,15,15]
+  offset: [-115,45-200,-30],
+  scale: [150,150,150]
 };
 project.models.push(model);
 model = {
   name: "col6_js.json",
   material: material,
-  offset: [-40,50,-70],
-  scale: [15,15,15]
+  offset: [-100,50-200,-90],
+  scale: [150,150,150]
 };
 project.models.push(model);
 model = {
   name: "col4_js.json",
   material: material,
-  offset: [0,50,-85],
-  scale: [15,15,15]
+  offset: [-40,50-200,-125],
+  scale: [150,150,150]
 };
 project.models.push(model);
 model = {
   name: "col2_js.json",
   material: material,
-  offset: [47,52,-57],
-  scale: [15,15,15]
+  offset: [47,52-200,-97],
+  scale: [150,150,150]
 };
 project.models.push(model);
 model = {
   name: "col4_js.json",
   material: material,
-  offset: [75,45,0],
-  scale: [15,15,15]
+  offset: [65,45-200,-30],
+  scale: [150,150,150]
 };
 project.models.push(model);
+model = {
+  name: "ground_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0xffffff,
+    normalMap: "ground_nm.jpg",
+    map: "ground_tex.jpg",
+    flipY: true
+  },
+  scale: [5000,1,5000],
+  offset: [0,-5000,0]
+};
+//project.models.push(model);
 geo = {
   type: THREE.BoxGeometry,
   params: [200,200,200],
@@ -264,6 +286,18 @@ geo = {
   },
   receiveShadow: false,
   position: [0,80,0]
+};
+//project.geometry.push(geo);
+geo = {
+  type: THREE.SphereGeometry,
+  params: [20000, 32, 15],
+  material: {
+    type: THREE.ShaderMaterial,
+    vertexShader: Shaders.sun.vertexShader,
+    fragmentShader: Shaders.sun.fragmentShader,
+    uniforms: Shaders.sun.uniforms,
+    side: THREE.BackSide
+  }
 };
 project.geometry.push(geo);
 light = {
@@ -286,6 +320,12 @@ light = {
   position: [0,20,0]
 };
 project.lights.push(light);
+light = {
+  type: THREE.DirectionalLight,
+  params: [0x644e39, 5],
+  position: [0,50,-500]
+};
+project.lights.push(light);
 
 // PROJECT 14
 project = {
@@ -294,12 +334,13 @@ project = {
   models: [],
   geometry: [],
   lights: [],
+  geometry: [],
   setup: {
     camera: {
       type: CylCam,
       r: 20,
       z: 1,
-      phi: Math.PI
+      phi: Math.PI/2
     }
   }
 };
@@ -308,49 +349,152 @@ model = {
   name: "shroom_low_js.json",
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x060606,
+    color: 0x030303,
     specular: 0x151515,
     shininess: 20,
     normalMap: "shroom_nm.jpg",
     flipY: false,
     normalScale: new THREE.Vector2(2,2)
-  }
+  },
+  rotation: [0,Math.PI/2,0]
 };
 project.models.push(model);
 model = {
-  name: "rock_low_js.json",
+  name: "planet_js.json",
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x020202,
-    specular: 0x050505,
-    shininess: 10,
-    normalMap: "rock_nm.jpg",
-    flipY: false,
-    normalScale: new THREE.Vector2(4,4)
-  }
+    color: 0x888888,
+    specular: 0x0,
+    shininess: 0,
+    map: "planet_tex.jpg",
+    normalMap: "planet_nm.jpg",
+    flipY: false
+  },
+  rotation: [0,Math.PI/2,0]
 };
 project.models.push(model);
 model = {
   name: "eyes_low_js.json",
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x100000,
+    color: 0x050000,
     specular: 0xdd0000,
-    shininess: 100
-  }
+    shininess: 50
+  },
+  rotation: [0,Math.PI/2,0]
 };
 project.models.push(model);
 light = {
   type: THREE.PointLight,
-  params: [0xffdddd, 7, 100, 2],
-  position: [10,5,0]
+  params: [0x644e39, 30, 100, 1],
+  position: [0,5,-50]
 };
 project.lights.push(light);
+light = {
+  type: THREE.DirectionalLight,
+  params: [0xffffff, 2],
+  position: [0,5,10]
+}
+project.lights.push(light);
+geo = {
+  type: THREE.SphereGeometry,
+  params: [20000, 32, 15],
+  material: {
+    type: THREE.ShaderMaterial,
+    vertexShader: Shaders.sun.vertexShader,
+    fragmentShader: Shaders.sun.fragmentShader,
+    uniforms: Shaders.sun.uniforms,
+    side: THREE.BackSide
+  }
+};
+project.geometry.push(geo);
+
+// PROJECT 28
+project = {
+  name: "28",
+  altName: "Isaac Netero",
+  models: [],
+  geometry: [],
+  lights: [],
+  setup: {
+    camera: {
+      type: FreeCam,
+      r: 6,
+      phiLL: 3*Math.PI/8,
+      phiUL: 5*Math.PI/8,
+      thetaLL: 3*Math.PI/8,
+      thetaUL: 5*Math.PI/8
+    }
+  }
+};
+config.projects['28'] = project;
+model = {
+  name: "28_13k_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x333333,
+    specular: 0x222222,
+    shininess: 25,
+    bumpMap: "28_disp.jpg",
+    bumpScale: .04,
+    flipY: false
+  },
+  scale: [2,2,2],
+  castShadow: true,
+  receive: true
+};
 project.models.push(model);
+model = {
+  name: "eyes_634_js.json",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x0,
+    specular: 0xffffff,
+    shininess: 1000,
+    shading: THREE.SmoothShading
+  },
+  scale: [2,2,2]
+};
+project.models.push(model);
+model = {
+  name: "mouth_bent.OBJ",
+  format: "OBJ",
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x0,
+    specular: 0x0,
+    shininess: 0
+  },
+  scale: [2,2,2]
+};
+project.models.push(model);
+uniforms = THREE.UniformsUtils.clone(Shaders.sun.uniforms);
+uniforms.sunPos.value = new THREE.Vector3(0,20000*Math.sin(Math.PI/12),-20000*Math.cos(Math.PI/12));
+uniforms.turbidity.value = 20;
+uniforms.mieCoefficient.value = 2;
+uniforms.g.value = 0.997;
+geo = {
+  type: THREE.SphereGeometry,
+  params: [20000, 32, 15],
+  material: {
+    type: THREE.ShaderMaterial,
+    vertexShader: Shaders.sun.vertexShader,
+    fragmentShader: Shaders.sun.fragmentShader,
+    uniforms: uniforms,
+    side: THREE.BackSide
+  }
+};
+project.geometry.push(geo);
 light = {
   type: THREE.PointLight,
-  params: [0xffdddd, 7, 100, 2],
-  position: [-10,5,0]
+  params: [0x999999,1,0,2],
+  position: [-2,1,5]
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0x999999,1,0,2],
+  position: [2,1,5]
 };
 project.lights.push(light);
 
@@ -412,3 +556,42 @@ light = {
   position: [0,0,50]
 }
 project.lights.push(light);
+
+// SHADER TEST PROJECT
+project = {
+  name: "SHADERTEST",
+  geometry: [],
+  lights: []
+};
+//config.projects['SHADERTEST'] = project;
+geo = {
+  type: THREE.SphereGeometry,
+  params: [20000, 32, 15],
+  material: {
+    type: THREE.ShaderMaterial,
+    vertexShader: Shaders.sun.vertexShader,
+    fragmentShader: Shaders.sun.fragmentShader,
+    uniforms: Shaders.sun.uniforms,
+    side: THREE.BackSide
+  }
+};
+project.geometry.push(geo);
+geo = {
+  type: THREE.PlaneGeometry,
+  params: [40000,40000],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0x030303,
+    specular: 0x111111,
+    shininess: 30
+  },
+  rotation: [-Math.PI/2,0,0],
+  offset: [0,-50,0]
+}
+//project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0xffffff, 10, 0, 2],
+  position: [0,40000*Math.sin(Math.PI/6), -40000*Math.cos(Math.PI/6)]
+}
+//project.lights.push(light);

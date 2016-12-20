@@ -94,14 +94,16 @@ function loadGeo(geo, project, textureLoader, dir, scene) {
 
   var mesh = new THREE.Mesh(geometry, material);
   applyGenericProperties(mesh, project, geo);
+  fillSimpleValues(geo, geometry, "geolight");
   scene.add(mesh);
 }
 
 function loadLight(lt, project, scene) {
   var light = newWithParams(lt.type, lt.params);
-  applyGenericProperties(light, project, lt);
   if ("shadowMapWidth" in lt) light.shadow.mapSize.width=lt.shadowMapWidth;
   if ("shadowMapHeight" in lt) light.shadow.mapSize.height=lt.shadowMapHeight;
+  applyGenericProperties(light, project, lt);
+  fillSimpleValues(lt, light, "geolight");
   scene.add(light);
 }
 
@@ -125,7 +127,6 @@ function newMaterial(mat, textureLoader, dir) {
   // if material not specified in config, return default material
   if (!mat) return new THREE.MeshPhongMaterial ({});
 
-  // if type not specified, default material is Phong
   if (mat.type) {
     if (mat.type==THREE.MeshFaceMaterial) {
       // if MeshFaceMaterial, make new materials for each face and return
@@ -139,13 +140,17 @@ function newMaterial(mat, textureLoader, dir) {
       material = newWithParams(mat.type);
     }
   }
+  // if type not specified, default material is Phong
   else material = new THREE.MeshPhongMaterial({});
 
   if ("color" in mat) material.color = new THREE.Color(mat.color);
   if ("specular" in mat) material.specular = new THREE.Color(mat.specular);
-  if ("shininess" in mat) material.shininess = mat.shininess;
   if ("normalMap" in mat) {
     material.normalMap = textureLoader.load(dir+mat.normalMap,
+      function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
+  }
+  if ("map" in mat) {
+    material.map = textureLoader.load(dir+mat.map,
       function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
   }
   if ("bumpMap" in mat) {
@@ -160,12 +165,25 @@ function newMaterial(mat, textureLoader, dir) {
     material.aoMap = textureLoader.load(dir+mat.aoMap,
       function(t) { if ("flipY" in mat) t.flipY = mat.flipY; });
   }
+  /*
+  if ("shininess" in mat) material.shininess = mat.shininess;
   if ("normalScale" in mat) material.normalScale = mat.normalScale;
   if ("shading" in mat) material.shading = mat.shading;
   if ("side" in mat) material.side = mat.side;
   if ("needsUpdate" in mat) material.needsUpdate = mat.needsUpdate;
+  if ("vertexShader" in mat) material.vertexShader = mat.vertexShader;
+  if ("fragmentShader" in mat) material.fragmentShader = mat.fragmentShader;*/
+  fillSimpleValues(mat, material, "material");
 
   return material;
+}
+
+function fillSimpleValues(params, target, targetName) {
+  /* targetName is "model", "geolight", or "material" */
+  for (var param in params) {
+    /* if not special parameter, fill in directly */
+    if (specialParams[targetName].indexOf(param) == -1) target[param] = params[param];
+  }
 }
 
 function applyGenericProperties(obj, project, params) {

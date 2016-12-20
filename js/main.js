@@ -4,7 +4,7 @@ var mouseX = 0, mouseY = 0, mouseXprev, mouseYprev, dX, dY;
 
 var mouseButton = -1;
 
-var projectName = "39";
+var projectName = "28";
 
 var running = true;
 
@@ -14,7 +14,7 @@ animate();
 function init() {
   container = document.getElementById('container');
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 3000);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 100000);
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0);
