@@ -9,6 +9,8 @@ function loadProject(name) {
   var loaders = {}, loader;
   var textureLoader = new THREE.TextureLoader();
 
+  //initLoadingOverlay();
+
   /* add all models in project */
   if (project.models) {
     for (var i=0; i<project.models.length; i++) {
@@ -34,6 +36,8 @@ function loadProject(name) {
   }
 
   doSetup(project.setup);
+
+  //deactivateLoadingOverlay();
 }
 
 function getLoader(model, loaders) {
@@ -216,6 +220,19 @@ function clearScene() {
   }
 }
 
+function initLoadingOverlay() {
+  var overlay = document.getElementById('loading-overlay');
+
+  overlay.innerHTML = "";
+  overlay.className = "overlay-active";
+}
+
+function deactivateLoadingOverlay() {
+  var overlay = document.getElementById('loading-overlay');
+
+  overlay.className = "";
+}
+
 function addLoadingElement(name) {
     var overlay = document.getElementById('loading-overlay');
 
@@ -228,7 +245,7 @@ function addLoadingElement(name) {
 
     var progressBar = document.createElement('div');
     progressBar.className = "progressBar";
-    progressBar.id = name + "progress";
+    progressBar.id = name[0] + "progress"; /* REMOVE [0] */
 
     el.appendChild(elementName);
     el.appendChild(progressBar);

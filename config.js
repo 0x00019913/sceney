@@ -498,6 +498,90 @@ light = {
 };
 project.lights.push(light);
 
+// PROJECT 49
+project = {
+  name: "49",
+  altName: "Razorback",
+  models: [],
+  geometry: [],
+  lights: [],
+  setup: {
+    camera: {
+      type: FreeCam,
+      r: 2.2
+    }
+  }
+};
+config.projects['49'] = project;
+material = {
+  type: THREE.MeshPhongMaterial,
+  color: 0x999999,
+  specular: 0xffffff,
+  shininess: 20,
+  flipY: false,
+  bumpScale: 0.01,
+  map: "tex.jpg",
+  bumpMap: "disp.jpg"
+};
+model = {
+  name: "blade_low_js.json",
+  material: material,
+  rotation: [0,0,Math.PI],
+  offset: [0.25,-0.1,0]
+};
+project.models.push(model);
+model = {
+  name: "handle_low_js.json",
+  material: material,
+  rotation: [0,0,Math.PI],
+  offset: [0.25,-0.1,0]
+};
+project.models.push(model);
+geo = {
+  type: THREE.PlaneGeometry,
+  params: [2000,2000],
+  material: {
+    type: THREE.MeshPhongMaterial,
+    color: 0xffffff,
+    specular: 0xffffff,
+    shininess: 0
+  },
+  rotation: [-Math.PI/2,0,0],
+  position: [0,-1,0]
+};
+//project.geometry.push(geo);
+uniforms = THREE.UniformsUtils.clone(Shaders.sun.uniforms);
+uniforms.sunPos.value = new THREE.Vector3(0,-20000,0);
+uniforms.turbidity.value = 20;
+uniforms.mieCoefficient.value = 3;
+uniforms.g.value = 0.997;
+uniforms.luminance.value = .02;
+geo = {
+  type: THREE.SphereGeometry,
+  params: [20000, 32, 15],
+  material: {
+    type: THREE.ShaderMaterial,
+    vertexShader: Shaders.sun.vertexShader,
+    fragmentShader: Shaders.sun.fragmentShader,
+    uniforms: uniforms,
+    side: THREE.BackSide
+  },
+  rotation: [Math.PI/2,0,0]
+};
+project.geometry.push(geo);
+light = {
+  type: THREE.PointLight,
+  params: [0x999999,2,0,2],
+  position: [0,1,1]
+};
+project.lights.push(light);
+light = {
+  type: THREE.PointLight,
+  params: [0x999999,2,0,2],
+  position: [0,1,-1]
+};
+project.lights.push(light);
+
 // PROJECT 39
 project = {
   name: "39",
