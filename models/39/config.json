@@ -1,0 +1,57 @@
+{
+  "config": {
+    "project": {
+      "rotation": [1.5,1,0],
+      "setup": {
+        "camera": {
+          "type": "FreeCam",
+          "r": 25,
+          "phiLL": 0,
+          "phiUL": 1
+        }
+      }
+    },
+    "models": [
+      {
+        "name": "mosquito_107k.OBJ",
+        "format": "OBJ",
+        "material": {
+          "type": "Phong",
+          "color": "0x111111",
+          "specular": "0x222222",
+          "shininess": 70
+        },
+        "offset": [0,3,0],
+        "castShadow": true,
+        "receiveShadow": true
+      }
+    ],
+    "geometry": [
+      {
+        "type": "Plane",
+        "params": [2000,2000],
+        "material": {
+          "type": "Phong",
+          "color": "0x111111",
+          "specular": "0x111111",
+          "shininess": 30
+        },
+        "rotation": [0,0,0.5],
+        "position": [0,0,-6.35]
+      }
+    ],
+    "lights": [
+      {
+        "type": "PointLight",
+        "params": ["0xffffff", 4, 0, 2],
+        "position": [0,0,5],
+        "castShadow": true
+      },
+      {
+        "type": "PointLight",
+        "params": ["0xffffff",1,0,2],
+        "position": [0,0,50]
+      }
+    ]
+  }
+}
