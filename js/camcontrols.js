@@ -38,6 +38,7 @@ function initCam(params) {
       thetaLL: epsilon,
       thetaUL: Math.PI-epsilon,
       rLL: epsilon,
+      rUL: 100,
       origin: new THREE.Vector3(0,0,0)
     };
   }
@@ -60,6 +61,7 @@ function initCam(params) {
       othetaLL: epsilon,
       othetaUL: Math.PI-epsilon,
       rLL: epsilon,
+      rUL: 100,
       origin: new THREE.Vector3(0,0,0)
     };
   }
