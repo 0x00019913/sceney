@@ -420,6 +420,8 @@ project = {
     camera: {
       type: FreeCam,
       r: 6,
+      rLL: 6,
+      rUL: 6,
       phiLL: 3*Math.PI/8,
       phiUL: 5*Math.PI/8,
       thetaLL: 3*Math.PI/8,

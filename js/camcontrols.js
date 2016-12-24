@@ -131,9 +131,11 @@ function handleWheel(d) {
   if (cam.type==FreeCam) {
     cam.r += cam.r * ((d>0)?cam.rRate:(-1*cam.rRate));
     if (cam.r<cam.rLL) cam.r = cam.rLL;
+    if (cam.r>cam.rUL) cam.r = cam.rUL;
   }
   if (cam.type==CylCam) {
     cam.r += cam.r * ((d>0)?cam.rRate:(-1*cam.rRate));
     if (cam.r<cam.rLL) cam.r = cam.rLL;
+    if (cam.r>cam.rUL) cam.r = cam.rUL;
   }
 }
