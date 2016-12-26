@@ -8,6 +8,7 @@ setupUI();
 function setupUI() {
   /* Set up menu items */
   var menu = document.getElementById('scenes');
+  if (!menu) return;
   for (var projectName in config.projects) {
     var el = document.createElement('p');
     el.className = "menu-item";

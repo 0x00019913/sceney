@@ -3,7 +3,7 @@
 var specialParams = {
   model: ["name", "format", "material", "position", "offset", "rotation", "scale"],
   geolight: ["type", "params", "material", "position", "offset", "rotation", "scale"],
-  material: ["type", "color", "specular", "map", "normalMap", "bumpMap", "aoMap", "shadowMapWidth", "shadowMapHeight"]
+  material: ["type", "color", "specular", "map", "normalMap", "bumpMap", "aoMap"]
 };
 
 var config = {};

@@ -12,6 +12,11 @@ init();
 animate();
 
 function init() {
+  if (/Mobi/.test(navigator.userAgent)) {
+    document.getElementById('disabled-overlay').style.visibility = "visible";
+    return;
+  }
+
   container = document.getElementById('container');
 
   camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, .1, 100000);
@@ -20,6 +25,10 @@ function init() {
   scene.background = new THREE.Color(0x0);
 
   /* GEOMETRY */
+  /* for testing loading projects from separate JSON config files */
+  //var projectLoader = new ProjectLoader(scene);
+  //projectLoader.load("models/"+projectName, "config.json");
+
   loadProject(projectName);
   positionCamera(camera);
 
@@ -84,6 +93,7 @@ function animate() {
 }
 
 function render() {
+  if (!camera || !scene) return;
   positionCamera(camera);
   renderer.render(scene, camera);
 }

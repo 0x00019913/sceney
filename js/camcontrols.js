@@ -72,7 +72,7 @@ function initCam(params) {
 }
 
 function positionCamera(camera) {
-  if (!cam) return;
+  if (!cam || !camera) return;
   if (cam.type==FreeCam) {
     camera.position.x = cam.r * Math.cos(cam.phi) * Math.sin(cam.theta) + cam.origin.x;
     camera.position.z = cam.r * Math.sin(cam.phi) * Math.sin(cam.theta) + cam.origin.z;

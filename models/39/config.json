@@ -1,14 +1,13 @@
 {
-  "config": {
-    "project": {
-      "rotation": [1.5,1,0],
-      "setup": {
-        "camera": {
-          "type": "FreeCam",
-          "r": 25,
-          "phiLL": 0,
-          "phiUL": 1
-        }
+  "project": {
+    "name": "39",
+    "rotation": [1.5,1,0],
+    "setup": {
+      "camera": {
+        "type": "FreeCam",
+        "r": 25,
+        "phiLL": 0,
+        "phiUL": 1
       }
     },
     "models": [

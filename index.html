@@ -35,13 +35,19 @@
 
         <p>This project is still very much a WIP - not a portfolio, but rather an experiment. It's my attempt at <br />1. showing my models in 3D (as opposed to simply on renders) and <br />2. a robust method of building scenes from multiple separate models, primitives, and lights.</p>
 
-        <p>TODO: finish refactoring project config to load from individual JSON files, turn controls into a fully independent module like what Three.js has, make menus prettier, make better shaders, add more models, make a loading overlay.</p>
+        <p>TODO: finish refactoring project config to load from individual JSON files, turn controls into a fully contained module like what Three.js has, make menus prettier, make better shaders, add more models, make a loading overlay.</p>
 
         <div id="logo"></div>
 
       </div>
       <div id="scenes" class="inactive">
         <p>SCENES:</p>
+      </div>
+    </div>
+
+    <div id="disabled-overlay">
+      <div id="disabled-text">
+        <p>Greetings! This page is disabled on mobile. Reasoning: WebGL is weighty and causes lag (and the camera controls don't work on mobile anyway). In my experience, a GPU is required. The latest Chrome and Firefox work at the time of writing. -Anton/0x00019913</p>
       </div>
     </div>
 
@@ -54,6 +60,7 @@
     <script src="config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/loaders/OBJLoader.js"></script>
+    <script src="js/ProjectLoader.js"></script>
     <script src="js/main.js"></script>
     <script src="js/ui.js"></script>
   </body>
