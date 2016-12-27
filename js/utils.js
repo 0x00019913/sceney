@@ -211,7 +211,18 @@ function doSetup(setup) {
     initCam(null);
     return;
   }
-  initCam(setup.camera);
+  if (setup.camera) {
+    initCam(setup.camera);
+  }
+  if (setup.scene) {
+    if (setup.scene.background) {
+      scene.background = new THREE.Color(setup.scene.background);
+    }
+    else {
+      scene.background = new THREE.Color(0x0);
+    }
+  }
+
 }
 
 function clearScene() {

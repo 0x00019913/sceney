@@ -330,31 +330,41 @@ project.lights.push(light);
 // PROJECT 14
 project = {
   name: "14",
-  altName: "The Tower (WIP)",
+  altName: "The Tower",
   models: [],
   geometry: [],
   lights: [],
   geometry: [],
   setup: {
     camera: {
-      type: CylCam,
+      type: FreeCam,
       r: 20,
-      z: 1,
-      phi: Math.PI/2
+      rLL: 15,
+      rUL: 35,
+      thetaLL: Math.PI/2-0.5,
+      thetaUL: Math.PI/2,
+      phi: Math.PI/2+0.3,
+      phiLL: Math.PI/2-0.4,
+      phiUL: Math.PI/2+1.0
+    },
+    scene: {
+      background: 0x0
     }
   }
 };
 config.projects['14'] = project;
 model = {
-  name: "shroom_low_js.json",
+  name: "shroom_14k_js.json",
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0x030303,
+    color: 0x090909,
     specular: 0x151515,
-    shininess: 20,
-    normalMap: "shroom_nm.jpg",
+    shininess: 10,
+    normalMap: "shroom2_nm.jpg",
+    bumpMap: "shroom2_disp.jpg",
+    bumpScale: 0.3,
     flipY: false,
-    normalScale: new THREE.Vector2(2,2)
+    normalScale: new THREE.Vector2(1,1)
   },
   rotation: [0,Math.PI/2,0]
 };
@@ -372,7 +382,7 @@ model = {
   },
   rotation: [0,Math.PI/2,0]
 };
-project.models.push(model);
+//project.models.push(model);
 model = {
   name: "eyes_low_js.json",
   material: {
@@ -396,6 +406,12 @@ light = {
   position: [0,5,10]
 }
 project.lights.push(light);
+uniforms = THREE.UniformsUtils.clone(Shaders.sun.uniforms);
+uniforms.sunPos.value = new THREE.Vector3(0,6680,-18851);
+uniforms.turbidity.value = 7;
+uniforms.mieCoefficient.value = 1;
+uniforms.g.value = 0.889;
+uniforms.luminance.value = 0.3;
 geo = {
   type: THREE.SphereGeometry,
   params: [20000, 32, 15],
@@ -403,7 +419,7 @@ geo = {
     type: THREE.ShaderMaterial,
     vertexShader: Shaders.sun.vertexShader,
     fragmentShader: Shaders.sun.fragmentShader,
-    uniforms: Shaders.sun.uniforms,
+    uniforms: uniforms,
     side: THREE.BackSide
   }
 };
@@ -510,7 +526,12 @@ project = {
   setup: {
     camera: {
       type: FreeCam,
-      r: 2.2
+      r: 2.2,
+      rLL: 0.5,
+      rUL: 7.5
+    },
+    scene: {
+      background: 0xcccccc
     }
   }
 };
@@ -540,35 +561,15 @@ model = {
 };
 project.models.push(model);
 geo = {
-  type: THREE.PlaneGeometry,
-  params: [2000,2000],
+  type: THREE.BoxGeometry,
+  params: [8,8,8],
   material: {
     type: THREE.MeshPhongMaterial,
-    color: 0xffffff,
-    specular: 0xffffff,
-    shininess: 0
-  },
-  rotation: [-Math.PI/2,0,0],
-  position: [0,-1,0]
-};
-//project.geometry.push(geo);
-uniforms = THREE.UniformsUtils.clone(Shaders.sun.uniforms);
-uniforms.sunPos.value = new THREE.Vector3(0,-20000,0);
-uniforms.turbidity.value = 20;
-uniforms.mieCoefficient.value = 3;
-uniforms.g.value = 0.997;
-uniforms.luminance.value = .02;
-geo = {
-  type: THREE.SphereGeometry,
-  params: [20000, 32, 15],
-  material: {
-    type: THREE.ShaderMaterial,
-    vertexShader: Shaders.sun.vertexShader,
-    fragmentShader: Shaders.sun.fragmentShader,
-    uniforms: uniforms,
+    color: 0x444444,
+    specular: 0x111111,
+    shininess: 100,
     side: THREE.BackSide
-  },
-  rotation: [Math.PI/2,0,0]
+  }
 };
 project.geometry.push(geo);
 light = {

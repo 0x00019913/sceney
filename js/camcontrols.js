@@ -106,6 +106,8 @@ function handleLMB(dX, dY) {
     if (cam.otheta < cam.othetaLL) cam.otheta = cam.othetaLL;
     if (cam.otheta > cam.othetaUL) cam.otheta = cam.othetaUL;
     cam.phi += cam.phiRate * dX;
+    if ("phiLL" in cam && cam.phi < cam.phiLL) cam.phi = cam.phiLL;
+    if ("phiUL" in cam && cam.phi > cam.phiUL) cam.phi = cam.phiUL;
   }
 }
 
@@ -124,6 +126,8 @@ function handleMMB(dX, dY) {
   }
   if (cam.type==CylCam) {
     cam.z += dY*cam.zRate*cam.r;
+    if ("zLL" in cam && cam.z < cam.zLL) cam.z = cam.zLL;
+    if ("zUL" in cam && cam.z > cam.zUL) cam.z = cam.zUL;
   }
 }
 

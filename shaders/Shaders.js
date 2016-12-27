@@ -17,6 +17,21 @@ void main() { \
   gl_FragColor = vec4(vec3(dist),1.0);\
 }";
 
+var test2_vert = " \
+varying vec3 vWorldPos; \
+void main() { \
+  vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz; \
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); \
+}";
+var test2_frag = " \
+varying vec3 vWorldPos; \
+float dist = 50.0; \
+\
+void main() { \
+  float alpha = 1.0 - clamp(length(vWorldPos)/dist,0.0,1.0); \
+  gl_FragColor = vec4(0.0,0.0,1.0,0.0); \
+}";
+
 var sun_vert = " \
 uniform vec3 sunPos; \
 uniform float turbidity; \
@@ -114,5 +129,10 @@ var Shaders = {
       luminance: { value: 1.1 },
       g: { value: 0.965 }
     }
+  },
+  test2: {
+    vertexShader: test2_vert,
+    fragmentShader: test2_frag,
+    unifroms: {}
   }
 };
