@@ -345,7 +345,8 @@ project = {
       thetaUL: Math.PI/2,
       phi: Math.PI/2+0.3,
       phiLL: Math.PI/2-0.4,
-      phiUL: Math.PI/2+1.0
+      phiUL: Math.PI/2+1.0,
+      allowPan: false
     },
     scene: {
       background: 0x0

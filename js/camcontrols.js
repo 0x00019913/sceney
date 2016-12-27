@@ -117,6 +117,7 @@ function handleMMB(dX, dY) {
     // default plane (theta=phi=0) is Y up, Z right, so put displacement
     // vector in that plane (larger for larger r), rotate around Z to adjust
     // for theta, then rotate around Y to adjust for phi
+    if ("allowPan" in cam && !cam.allowPan) return;
     var displacement = new THREE.Vector3(0, dY*cam.yPanRate*cam.r, dX*cam.xPanRate*cam.r);
     displacement.applyAxisAngle(new THREE.Vector3(0,0,-1),Math.PI/2-cam.theta);
     displacement.applyAxisAngle(new THREE.Vector3(0,1,0),cam.phi);
